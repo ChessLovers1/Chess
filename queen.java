@@ -1,7 +1,8 @@
 public class queen extends Piece{
-    int image;
-    int moves;
+    
 
-    public queen(){
+    public queen(String color){
+            super(color);
+
     }
 }

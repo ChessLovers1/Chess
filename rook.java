@@ -1,7 +1,7 @@
 public class rook extends Piece{
-    int image;
-    int moves;
 
-    public rook(){
-    }
+    public rook(String color){
+        super(color);
+
+}
 }

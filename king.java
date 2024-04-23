@@ -1,7 +1,7 @@
 public class king extends Piece{
-    int image;
-    int moves;
+    
+    public king(String color){
+        super(color);
 
-    public king(){
-    }
+}
 }

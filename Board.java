@@ -1,17 +1,28 @@
 public class Board {
     /*
 
-    Project Board at all time
+    Project Board at all time (Canvas)
     
     Update Board/Pieces as game goes on
 
 
     */
-    Piece[][] Board = new Piece[8][8]; //a1 - h8
+    Piece[][] Board;
     
+    public Board(){
+        this.Board =  new Piece[8][8];
 
+        //populate the board
+
+        for(int i = 0; i < 8; i++){
+            Board[1][i] = new pawn("white");
+        }
+        for(int i = 0; i < 8; i++){
+            Board[1][i] = new pawn("black");
+        }
+    }
    
-    private int[] convertToIndex(String coord){
+    public static int[] convertToIndex(String coord){
         //returns usable index for Board
         int[] index = new int[2];
 
@@ -26,19 +37,22 @@ public class Board {
 
     }
 
-    private String convertToCoord(int[] index){
+    public static String convertToCoord(int[] index){
         //returns chess coord
         String coord = "";
+
+        coord = Character.toString ((char) 97+index[1]);
+        
+        coord = coord + String.valueOf(index[0]);
+
 
         return coord;
     }
 
+
+
     public static void main(String arg[]){
 
-
-        Board board = new Board();
-
-        System.out.println(board.convertToIndex("f5")[0]+ "a"+board.convertToIndex("f6")[1] );
-
+       
     }
 }

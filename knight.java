@@ -1,7 +1,8 @@
 public class knight extends Piece{
-    int image;
-    int moves;
 
-    public knight(){
-    }
+    public knight(String color){
+        super(color);
+
+}
+    
 }
