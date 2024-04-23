@@ -4,6 +4,11 @@ public class bishop extends Piece{
     int image;
     int moves;
 
-    public bishop(){
-    }
+    public bishop(String color){
+        super(color);
+
+}
+    public String toString(){
+        return "bishop";
+    }  
 }

@@ -18,10 +18,42 @@ public class Board {
             Board[1][i] = new pawn("white");
         }
         for(int i = 0; i < 8; i++){
-            Board[1][i] = new pawn("black");
+            Board[6][i] = new pawn("black");
         }
+
+
+        for(int i = 0; i < 2; i++){
+            Board[0][i*7] = new rook("white");
+        }
+        for(int i = 0; i < 2; i++){
+            Board[7][i*7] = new rook("black");
+        }
+
+        for(int i = 0; i < 2; i++){
+            Board[0][2 +i*3] = new bishop("white");
+        }
+        for(int i = 0; i < 2; i++){
+            Board[7][2 +i*3] = new bishop("black");
+        }
+
+        for(int i = 0; i < 2; i++){
+            Board[0][1 +i*5] = new knight("white");
+        }
+        for(int i = 0; i < 2; i++){
+            Board[7][1 +i*5] = new knight("black");
+        }
+
+       
+        Board[0][3] = new queen("white");
+        Board[7][3] = new queen("black");
+
+        Board[0][4] = new king("white");
+        Board[7][4] = new king("black");
+        
     }
-   
+    public Piece getPiece(int j, int i){
+        return Board[j][i];
+    }
     public static int[] convertToIndex(String coord){
         //returns usable index for Board
         int[] index = new int[2];
@@ -36,7 +68,17 @@ public class Board {
         return index;
 
     }
+    public void printBoard(){
 
+        for(int j = 0; j<8;j++){
+            System.out.println();
+            for(int i = 0; i < 8;i++){
+
+                System.out.print(this.getPiece(j, i)+" ");
+            }
+        }
+    }
+    
     public static String convertToCoord(int[] index){
         //returns chess coord
         String coord = "";

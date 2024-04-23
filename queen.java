@@ -5,4 +5,7 @@ public class queen extends Piece{
             super(color);
 
     }
+    public String toString(){
+        return "queen";
+    }   
 }

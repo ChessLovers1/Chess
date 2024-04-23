@@ -6,4 +6,7 @@ public class pawn extends Piece{
 
     }
     
+    public String toString(){
+        return "pawn";
+    }   
 }
