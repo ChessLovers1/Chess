@@ -1,4 +1,7 @@
 public class pawn extends Piece{
-    int images;
+    String image;
     int moves;
+
+    public pawn(){
+    }
 }

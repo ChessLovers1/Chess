@@ -1,4 +1,4 @@
 public class rook extends Piece{
-    int images;
+    int image;
     int moves;
 }

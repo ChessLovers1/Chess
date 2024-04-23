@@ -1,4 +1,6 @@
+//Gotta change the file back pain :(
+
 public class bishop extends Piece{
-    int images;
+    int image;
     int moves;
 }

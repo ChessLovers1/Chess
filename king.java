@@ -1,4 +1,4 @@
 public class king extends Piece{
-    int images;
+    int image;
     int moves;
 }

@@ -1,4 +1,4 @@
 public class queen extends Piece{
-    int images;
+    int image;
     int moves;
 }
