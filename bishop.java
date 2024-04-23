@@ -3,4 +3,7 @@
 public class bishop extends Piece{
     int image;
     int moves;
+
+    public bishop(){
+    }
 }
