@@ -1,8 +1,15 @@
 public class Piece{
 
-   String color;
-   int startingPosition;
-    
+    String color;
+    String Img; 
+
+    public Piece(String color){
+
+        this.color = color;
+    }
+
+
+    //have a method
 }
 
 
