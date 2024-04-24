@@ -51,6 +51,27 @@ public class Board {
         Board[7][4] = new king("black");
         
     }
+
+    /*
+    { rook, knight, bishop, queen, king, bishop, knight, rook
+      pawn, pawn, pawn, pawn, pawn, pawn, pawn, pawn
+      null, null, null, null, null, null, null, null
+      null, null, null, null, null, null, null, null
+      null, null, null, null, null, null, null, null
+      null, null, null, null, null, null, null, null
+      pawn, pawn, pawn, pawn, pawn, pawn, pawn, pawn
+      rook, knight, bishop, queen, king, bishop, knight, rook }
+     */
+
+    public Board(String[][] AlgebraicBoard ){
+        //currentPosition is a list of moves that the board is meant to start with
+    }
+
+    public Board(Piece[][] currentPosition){
+         //Custom boards
+    }
+
+
     public Piece getPiece(int j, int i){
         return Board[j][i];
     }
@@ -58,7 +79,7 @@ public class Board {
     public Piece[][] getBoard(){
         return Board;
     }
-    
+
     public static int[] convertToIndex(String coord){
         //returns usable index for Board
         int[] index = new int[2];

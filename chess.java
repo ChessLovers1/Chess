@@ -51,9 +51,55 @@ public class chess {
         return true;
     }
 
-    private static boolean kingMove(Piece[][] initialPosition, Piece[][] finalPosition){
+    private static boolean kingMove(Board board,int yIni,int xIni,int y,int x){
         return true;
     }
+
+    private static boolean rookMove(Board board,int yIni,int xIni,int y,int x){
+        String Direction = "";
+
+        if(yIni <0 || yIni >7 || xIni <0 || xIni >7){
+            throw new IndexOutOfBoundsException("The rook starting position is not on the board");
+        }
+        if(y <0 || y >7 || x <0 || x >7){
+            throw new IndexOutOfBoundsException("The rook destination is not on the board");
+        }
+
+        if(yIni == y && xIni == x){//the piece has not moved
+            return false;
+        }
+        if(yIni-y != 0 && xIni-x == 0){//checks if it's moving in two dimensions
+            return false;
+        }
+
+        
+        //Find direction
+        if(yIni-y<0 || xIni - x == 0){//up
+            Direction = "up";
+        }
+        else if(yIni - y>0 || xIni - x == 0){//down
+            Direction = "down";
+
+        }
+        else if(xIni-x<0 || yIni - y == 0){//up
+            Direction = "right";
+        }
+        else if(xIni - x>0 || yIni - y == 0){//down
+            Direction = "left";
+
+        }
+        else{//Not a valid rook move
+            return false;
+        }
+
+        //check if there is a a Piece in between it and its destination
+
+    }
+    //private static String direction(int yIni, int xIni, int y, int x){
+        // up left down right tr(top-right) tl(top-left) bl(bottom-left) br(bottom-right)    Knight: ktl 
+        
+    //}
+    
     public static void main(String[] args) {
         Board test = new Board();
 
