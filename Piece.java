@@ -13,6 +13,13 @@ public class Piece{
         
     }
 
+    public String getColor(){
+        return color;
+    }
+
+    public String getImg(){
+        return Img;
+    }
 
     
 }

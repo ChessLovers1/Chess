@@ -23,15 +23,44 @@ public class chess {
 
     */
 
+    public static boolean validMove(Board board,int yIni,int xIni,int y,int x ){
+        Piece piece = board.getBoard()[yIni][xIni];
+        //check if any specials execptions would prevent from moving such as check
 
 
+
+        //check if valid move for that specific piece
+        if(piece.getClass() == new queen(null).getClass()){
+            
+        }
+        else if(piece.getClass() == new rook(null).getClass()){
+
+        }
+        else if(piece.getClass() == new pawn(null).getClass()){
+
+        }
+        else if(piece.getClass() == new bishop(null).getClass()){
+
+        }
+        else if(piece.getClass() == new knight(null).getClass()){
+
+        }
+        else{
+
+        }
+        return true;
+    }
+
+    private static boolean kingMove(Piece[][] initialPosition, Piece[][] finalPosition){
+        return true;
+    }
     public static void main(String[] args) {
         Board test = new Board();
 
 
         test.printBoard();
 
-        
+        validMove(test, 0, 3, 0, 0);
 
     }
 }

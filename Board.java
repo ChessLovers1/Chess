@@ -54,6 +54,11 @@ public class Board {
     public Piece getPiece(int j, int i){
         return Board[j][i];
     }
+
+    public Piece[][] getBoard(){
+        return Board;
+    }
+    
     public static int[] convertToIndex(String coord){
         //returns usable index for Board
         int[] index = new int[2];
@@ -78,7 +83,7 @@ public class Board {
             }
         }
     }
-    
+
     public static String convertToCoord(int[] index){
         //returns chess coord
         String coord = "";
