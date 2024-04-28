@@ -28,31 +28,35 @@ public class Chess {
     */
 
     public static boolean validMove(Board board,int yIni,int xIni,int y,int x ){
-        Piece piece = board.getBoard()[yIni][xIni];
-        //check if any specials execptions would prevent from moving such as check
-
+        boolean result = false;
+    	Piece piece = board.getBoard()[yIni][xIni];
+        //check if any specials execeptions would prevent from moving such as check
+    	
+    	//method called valid capture
+        //1. Check if There is a piece on the final square
+        //2.Check if the pieces are different colors***************
 
 
         //check if valid move for that specific piece
         if(piece.getClass() == new Queen(null).getClass()){
-            
+            result = false;
         }
         else if(piece.getClass() == new Rook(null).getClass()){
-
+        	result = rookMove(board,yIni,xIni,y,x );
         }
         else if(piece.getClass() == new Pawn(null).getClass()){
-
+        	result = false;
         }
         else if(piece.getClass() == new Bishop(null).getClass()){
-
+        	result = false;
         }
         else if(piece.getClass() == new Knight(null).getClass()){
-
+        	result = false;
         }
         else{
-
+        	result = false;
         }
-        return true;
+        return result;
     }
 
     private static boolean kingMove(Board board,int yIni,int xIni,int y,int x){
@@ -60,7 +64,7 @@ public class Chess {
     }
 
     private static boolean rookMove(Board board,int yIni,int xIni,int y,int x){
-        String Direction = "";
+        boolean result = false;
 
         if(yIni <0 || yIni >7 || xIni <0 || xIni >7){
             throw new IndexOutOfBoundsException("The rook starting position is not on the board");
@@ -68,46 +72,69 @@ public class Chess {
         if(y <0 || y >7 || x <0 || x >7){
             throw new IndexOutOfBoundsException("The rook destination is not on the board");
         }
-
+        
         if(yIni == y && xIni == x){//the piece has not moved
             return false;
         }
-        if(yIni-y != 0 && xIni-x == 0){//checks if it's moving in two dimensions
+        if(yIni-y != 0 && xIni-x != 0){//checks if it's moving in two dimensions
             return false;
         }
-
+       
+        
         
         //Find direction
         if(yIni-y<0 || xIni - x == 0){//up
-            Direction = "up";
+            //Direction = "up";
+        	result = isObstructed(board,yIni,xIni,y,x,1,0);
+        	System.out.print("up");
         }
         else if(yIni - y>0 || xIni - x == 0){//down
-            Direction = "down";
-
+        	result = isObstructed(board,yIni,xIni,y,x,-1,0);
+        	System.out.print("down");
         }
-        else if(xIni-x<0 || yIni - y == 0){//up
-            Direction = "right";
+        else if(xIni-x<0 || yIni - y == 0){//right
+        	result = isObstructed(board,yIni,xIni,y,x,0,1);
+        	System.out.print("right");
         }
-        else if(xIni - x>0 || yIni - y == 0){//down
-            Direction = "left";
-
+        else if(xIni - x>0 || yIni - y == 0){//left
+        	result = isObstructed(board,yIni,xIni,y,x,0,-1);
+        	System.out.print("left");
         }
         else{//Not a valid rook move
-            return false;
+            result = false;
         }
-
-        //check if there is a a Piece in between it and its destination
-        return true;
+   
+        return result;
     }
-    //private static String direction(int yIni, int xIni, int y, int x){
-        // up left down right tr(top-right) tl(top-left) bl(bottom-left) br(bottom-right)    Knight: ktl 
+    
+    
+    private static boolean isObstructed(Board board, int yIni, int xIni, int y, int x, int yStep,int xStep){
         
-    //}
+    	while(!(yIni == y-yStep && xIni == x-xStep) && (yIni < 8 && yIni >= 0 && xIni < 8 && xIni >= 0)) {
+    		xIni += xStep;
+    		yIni += yStep;
+    		
+    		if(board.getBoard()[yIni][xIni] != null) {
+    			return false;
+    		}
+    		
+    		
+    		
+    		
+    	}
+    	
+    	if (yIni == y-yStep && xIni == x-xStep){
+    		return true;
+    	}
+    	return false;
+    }
+    
     
     /**
      * @param args
      */
     public static void main(String[] args) {
+    	System.out.println("test");
         Board test = new Board("Rookwhite Knightwhite Bishopwhite Queenwhite Kingwhite Bishopwhite Knightwhite Rookwhite \r\n"
         		+ "Pawnwhite Pawnwhite Pawnwhite Pawnwhite Pawnwhite Pawnwhite Pawnwhite Pawnwhite \r\n"
         		+ "null null null null null null null null \r\n"
@@ -117,10 +144,20 @@ public class Chess {
         		+ "Pawnblack Pawnblack Pawnblack Pawnblack Pawnblack Pawnblack Pawnblack Pawnblack \r\n"
         		+ "Rookblack Knightblack Bishopblack Queenblack Kingblack Bishopblack Knightblack Rookblack ");
 
-
-        test.printBoard();
-
+        System.out.println(validMove(test, 0, 0, 2, 0));
         
+
+        System.out.println("test1");
+        Board test1 = new Board("Rookwhite Knightwhite Bishopwhite Queenwhite Kingwhite Bishopwhite Knightwhite Rookwhite \r\n"
+        		+ "null Pawnwhite Pawnwhite Pawnwhite Pawnwhite Pawnwhite Pawnwhite Pawnwhite \r\n"
+        		+ "null null null null null null null null \r\n"
+        		+ "null null null null null null null null \r\n"
+        		+ "null null null null null null null null \r\n"
+        		+ "Rookblack null null null null null null null \r\n"
+        		+ "Pawnblack Pawnblack Pawnblack Pawnblack Pawnblack Pawnblack Pawnblack Pawnblack \r\n"
+        		+ "null Knightblack Bishopblack Queenblack Kingblack Bishopblack Knightblack Rookblack ");
+
+        System.out.println(validMove(test1, 5, 5, 5, 0));
 
     }
 }

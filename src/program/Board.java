@@ -81,9 +81,9 @@ Rook Knight Bishop Queen King Bishop Knight Rook
     	
     	currentPosition = currentPosition.replace("\r\n", "");
     	String[] OrderedPieceList = currentPosition.split(" ");
-    	for(int i = 0 ; i< OrderedPieceList.length;i++) {
-    		System.out.println(OrderedPieceList[i]);
-    	}
+    	//for(int i = 0 ; i< OrderedPieceList.length;i++) {
+    	//	System.out.println(OrderedPieceList[i]);
+    	//}
     	for(int j = 0; j<8; j++) {
     		for(int i = 0; i<8; i++) {
     			
