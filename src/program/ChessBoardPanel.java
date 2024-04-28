@@ -1,3 +1,5 @@
+package program;
+
 import java.awt.Graphics;
 import java.awt.Image;
     
@@ -19,4 +21,3 @@ public class ChessBoardPanel extends JPanel {
         g.drawImage(pic, 0, 0, null);
     }
 }
-   
