@@ -11,13 +11,13 @@ public class ChessBoardPanel extends JPanel {
     private Image pic;
     
     public ChessBoardPanel() {
-        ImageIcon obj = new ImageIcon("./img/z-Black-rook-chess.png");
+        ImageIcon obj = new ImageIcon("./src/img/z-chessBoardV1.png");
         pic = obj.getImage();
     }
     
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.drawImage(pic, 0, 0, null);
+        g.drawImage(pic, 10, 10, null);
     }
 }
