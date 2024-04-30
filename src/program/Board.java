@@ -157,6 +157,7 @@ Rook Knight Bishop Queen King Bishop Knight Rook
         return Board;
     }
 
+    
     public static int[] convertToIndex(String coord){
         //returns usable index for Board
         int[] index = new int[2];

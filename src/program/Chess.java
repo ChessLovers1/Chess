@@ -27,15 +27,26 @@ public class Chess {
 
     */
 
+	public static boolean canMove() {
+		
+	}
+	
     public static boolean validMove(Board board,int yIni,int xIni,int y,int x ){
         boolean result = false;
-    	Piece piece = board.getBoard()[yIni][xIni];
+    	Piece piece = board.getPiece(yIni, xIni);
+    	
         //check if any specials execeptions would prevent from moving such as check
     	
-    	//method called valid capture
+    	
+    	//check if the piece can't move because of checks/pins
+    	
+    	
+    	
         //1. Check if There is a piece on the final square
-        //2.Check if the pieces are different colors***************
-
+        //2.Check if the pieces are different colors
+    	if(!validCapture(board,yIni,xIni,y,x )) {
+    		return false;
+    	}
 
         //check if valid move for that specific piece
         if(piece.getClass() == new Queen(null).getClass()){
@@ -58,7 +69,23 @@ public class Chess {
         }
         return result;
     }
-
+    
+    public static int isInCheck(Board board) {
+    	// if white is in check return 1; if no checks return 0; if black check return -1;
+    	for(int j = 0; j < 8 ; j++) {
+    		
+    		for(int i = 0; i < 8 ; i++) {
+    			
+    			if(board.getPiece(j, i).getClass() == new King(null).getClass()) {
+    				String color = board.getPiece(j, i).getColor();
+    				//not finished
+    				
+    			}
+    		}
+    	}
+    	
+    }
+    
     private static boolean kingMove(Board board,int yIni,int xIni,int y,int x){
         return true;
     }
@@ -107,6 +134,20 @@ public class Chess {
         return result;
     }
     
+    private static boolean validCapture(Board board,int yIni,int xIni,int y,int x ) {
+    	//if there is no pieces at the destination than return true
+    	//The piece at the destination need to be different than the piece traveling there
+    	if(board.getPiece(y, x) == null) {
+    		return true;
+    	}
+    	
+    	if(board.getPiece(y, x).getColor() != board.getPiece(yIni, xIni).getColor()) {
+    		return true;
+    	}
+    	
+    	return false;
+    	
+    }
     
     private static boolean isObstructed(Board board, int yIni, int xIni, int y, int x, int yStep,int xStep){
         
@@ -114,7 +155,7 @@ public class Chess {
     		xIni += xStep;
     		yIni += yStep;
     		
-    		if(board.getBoard()[yIni][xIni] != null) {
+    		if(board.getPiece(yIni, xIni) != null) {
     			return false;
     		}
     		
@@ -157,7 +198,7 @@ public class Chess {
         		+ "Pawnblack Pawnblack Pawnblack Pawnblack Pawnblack Pawnblack Pawnblack Pawnblack \r\n"
         		+ "null Knightblack Bishopblack Queenblack Kingblack Bishopblack Knightblack Rookblack ");
 
-        System.out.println(validMove(test1, 5, 5, 5, 0));
+        System.out.println(validMove(test1, 0, 0, 4, 0));
 
     }
 }

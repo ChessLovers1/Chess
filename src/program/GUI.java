@@ -1,15 +1,20 @@
 package program;
 
 import java.awt.Canvas;
+
 import java.awt.Color;
 import javax.swing.JFrame;
+import javax.imageio.ImageIO;
+import java.io.File;
 
 public class GUI extends JFrame {
-
+	
+	public Canvas canvas;
+		
     public GUI() {
         super("Blank Page");
 
-        Canvas canvas = new Canvas();
+        canvas = new Canvas();
 
         // Set canvas background color to white
         canvas.setBackground(Color.WHITE);
@@ -22,6 +27,6 @@ public class GUI extends JFrame {
     }
 
     public static void main(String[] args) {
-        new GUI();
+        
     }
 }

@@ -11,7 +11,7 @@ public class ChessBoardPanel extends JPanel {
     private Image pic;
     
     public ChessBoardPanel() {
-        ImageIcon obj = new ImageIcon("z-Black-rook-chess.png");
+        ImageIcon obj = new ImageIcon("./img/z-Black-rook-chess.png");
         pic = obj.getImage();
     }
     
