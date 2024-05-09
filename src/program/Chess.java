@@ -27,9 +27,9 @@ public class Chess {
 
     */
 
-	public static boolean canMove() {
-		
-	}
+	//public static boolean canMove() {
+		//Method that 
+	//}
 	
     public static boolean validMove(Board board,int yIni,int xIni,int y,int x ){
         boolean result = false;
@@ -69,7 +69,7 @@ public class Chess {
         }
         return result;
     }
-    
+    /*
     public static int isInCheck(Board board) {
     	// if white is in check return 1; if no checks return 0; if black check return -1;
     	for(int j = 0; j < 8 ; j++) {
@@ -80,11 +80,29 @@ public class Chess {
     				String color = board.getPiece(j, i).getColor();
     				//not finished
     				
+    				isObstructed(board, j , i , 8 , i, 1, 0 );
+    				
     			}
     		}
     	}
     	
     }
+    */
+    /*
+    private static int[] findClosestPiece(Board board,int yIni,int xIni,int yStep,int xStep) {
+    	int[] result = new int[2];
+    	int y = 0;
+    	int x = 0;
+    	//finish
+    	while(!isObstructed(board,yIni,xIni,y,x,yStep,xStep)) {
+    		
+    		
+    		
+    	}
+    	
+    }
+    */
+    
     
     private static boolean kingMove(Board board,int yIni,int xIni,int y,int x){
         return true;
