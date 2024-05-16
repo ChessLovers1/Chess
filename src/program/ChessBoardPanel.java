@@ -9,7 +9,7 @@ import javax.swing.JPanel;
     
 public class ChessBoardPanel extends JPanel {
         
-	//Board
+    //Board
     private Image board;
     
     //Pieces
@@ -91,11 +91,11 @@ public class ChessBoardPanel extends JPanel {
         
         //Variable to help control where the Piece images go once centered for x value
         int varx = 87;  // 87 is a1
-		   			    // 167 is b1
-		                // Difference in y is 80
+		   		// 167 is b1
+		        	// Difference in y is 80
         
-        			    // MIN: 87
-        				// MAX: 647
+        			// MIN: 87
+        		        // MAX: 647
         
        
         //---------------------------------------------------------
@@ -107,8 +107,8 @@ public class ChessBoardPanel extends JPanel {
         			    // 567 is a2
         			    // Difference in y is 80
         
-	    				// MIN: 647 
-						// MAX: 87
+	    			    // MIN: 647 
+				    // MAX: 87
         
         
         //---------------------------------------------------------
