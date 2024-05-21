@@ -14,7 +14,11 @@ public class GUI extends JFrame {
     public GUI() {
     	super("Chess"); 
     	
-    	//ChessBoard background
+      	//ChessBoard background
+        ChessBoardPanel chessBoardPanel = new ChessBoardPanel();
+        add(chessBoardPanel);
+
+ 
     	
     	Adapter = new MyAdapter();
     	
