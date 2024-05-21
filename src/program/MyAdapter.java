@@ -7,29 +7,24 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-
-public class MyAdapter extends JPanel {
-
+import java.lang.Thread;
+public class MyAdapter extends JPanel{
+	public int x;
+	public int y;
+	
   public MyAdapter() {
 
-      addMouseListener(new MouseAdapter() { 
-          public void mousePressed(MouseEvent me) { 
-            System.out.println(me); 
+	  addMouseMotionListener(new MouseAdapter() { 
+          public void mouseDragged(MouseEvent me) {
+       
+            x = me.getX();
+            y = me.getY();
+            
           } 
-        }); 
+        });  
+      
+      
 
   }
 
-  /**
- * @param args
- */
-public static void main(String[] args) {
-	    JFrame frame = new JFrame();
-	    frame.getContentPane().add(new MyAdapter());
-
-	    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-	    frame.setSize(200, 200);
-	    frame.setVisible(true);
-	  }
 }
