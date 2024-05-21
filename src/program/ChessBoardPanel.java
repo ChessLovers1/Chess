@@ -8,7 +8,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JPanel;
     
 public class ChessBoardPanel extends JPanel {
-        
+    public int x;
+
+    public int y;
     //Board
     private Image board;
     
@@ -71,7 +73,13 @@ public class ChessBoardPanel extends JPanel {
     }
     
     
-    
+    public void moveImg(int x, int y){
+
+        this.x = x;
+        this.y = y;
+        repaint();
+    }
+
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
