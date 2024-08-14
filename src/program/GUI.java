@@ -1,33 +1,25 @@
 package program;
 
+import java.awt.*; 
+import java.awt.event.*; 
+import javax.swing.*; 
 import java.awt.Canvas;
 import java.awt.Toolkit;
 import java.awt.Color;
-import javax.swing.JFrame;
-
 import java.util.Timer;
 import java.util.Date;
 public class GUI extends JFrame {
 
-   public MyAdapter Adapter= null;
+   
    
     public GUI() {
     	super("Chess"); 
     	
-      	//ChessBoard background
-        ChessBoardPanel chessBoardPanel = new ChessBoardPanel();
-        add(chessBoardPanel);
-
- 
-    	
-    	Adapter = new MyAdapter();
-    	
-    	
-    	
-    	
-    	
-    	getContentPane().add(Adapter);
-    	
+    	ChessBoardPanel test = new ChessBoardPanel();
+        
+    	add(test);
+    	//imageObject a =  new imageObject(new ImageIcon("./src/img/z-White-queen-chess.png").getImage(), 0,0) ;
+    	//add(a);
     	//setExtendedState(JFrame.MAXIMIZED_BOTH);//Fullscreen
     	//Toolkit.getDefaultToolkit().getScreenSize
         setSize(850,600 ); // Set your desired size
@@ -38,22 +30,49 @@ public class GUI extends JFrame {
 
         setVisible(true); // Make the window visible
     }
-    public MyAdapter getAdapter() {
-    	return this.Adapter;
-    }
+    
+    
+    
     public static void main(String[] args) {
         JFrame frame = new GUI();
         
-       
         
-        ChessBoardPanel horse = new ChessBoardPanel("Rookblack", 0, 0);
-        frame.getContentPane().add(horse);
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        /*
+        frame.setLayout(new FlowLayout());
+        
+        ChessBoardPanel horse = new ChessBoardPanel();
+        imageObject horse2 = new imageObject("./src/img/z-Black-bishop-chess.png",10,10);
+        //frame.getContentPane().add(horse);
+        frame.add(horse);
+        frame.add(horse2);
          
         
         //getContentPane()
         
         
-        /*
+        
         long startTime = System.currentTimeMillis();
         long elapsedTime = 0L;
 
@@ -61,13 +80,14 @@ public class GUI extends JFrame {
             
             elapsedTime = (new Date()).getTime() - startTime;
         }
-		*/
+		
         while(true) {
         	
         	horse.moveImg(((GUI)frame).Adapter.x, ((GUI)frame).Adapter.y);
         
         	
         }
+        */
     }
 }
 
