@@ -1,5 +1,14 @@
 package program;
 
+import javax.swing.JFrame;
+import java.awt.Image;
+import javax.swing.ImageIcon;
+
+
+import java.io.BufferedInputStream;////////////////////
+
+
+
 import pieces.*;
 
 public class Chess {
@@ -168,7 +177,7 @@ public class Chess {
     }
     
     private static boolean isObstructed(Board board, int yIni, int xIni, int y, int x, int yStep,int xStep){
-        
+        //check if their is a piece in the path
     	while(!(yIni == y-yStep && xIni == x-xStep) && (yIni < 8 && yIni >= 0 && xIni < 8 && xIni >= 0)) {
     		xIni += xStep;
     		yIni += yStep;
@@ -193,12 +202,15 @@ public class Chess {
      * @param args
      */
     public static void main(String[] args) {
+    	
+    	
+    	
     	System.out.println("test");
         Board test = new Board("Rookwhite Knightwhite Bishopwhite Queenwhite Kingwhite Bishopwhite Knightwhite Rookwhite \r\n"
         		+ "Pawnwhite Pawnwhite Pawnwhite Pawnwhite Pawnwhite Pawnwhite Pawnwhite Pawnwhite \r\n"
         		+ "null null null null null null null null \r\n"
         		+ "null null null null null null null null \r\n"
-        		+ "null null null null null null null null \r\n"
+        		+ "null null null Pawnwhite null null null null \r\n"
         		+ "null null null null null null null null \r\n"
         		+ "Pawnblack Pawnblack Pawnblack Pawnblack Pawnblack Pawnblack Pawnblack Pawnblack \r\n"
         		+ "Rookblack Knightblack Bishopblack Queenblack Kingblack Bishopblack Knightblack Rookblack ");
@@ -215,8 +227,24 @@ public class Chess {
         		+ "Rookblack null null null null null null null \r\n"
         		+ "Pawnblack Pawnblack Pawnblack Pawnblack Pawnblack Pawnblack Pawnblack Pawnblack \r\n"
         		+ "null Knightblack Bishopblack Queenblack Kingblack Bishopblack Knightblack Rookblack ");
-
-        System.out.println(validMove(test1, 0, 0, 4, 0));
-
+        test1.printBoard();
+        System.out.println(validMove(test1, 0, 0, 5, 0));
+        //check for null before object.getClass program.Chess.validMove(Chess.java:41)
+    	//at program.Chess.main(Chess.java:160)
+    	
+        //////////////////////////////////////////////////////////////////////
+       
+        
+        Board board = new Board();
+        JFrame frame = new GUI();
+        imageObject chessBoard = new imageObject("./src/img/z-chessBoardV1.png");
+       
+        
+        BufferedImage bimg = ImageIO.read(new File(filename));
+        
+        int x = (frame.getWidth() - Image.getWidth(chessBoard.image)) / 2;
+        int y = (frame.getHeight() - board1.getWidth(this)) / 2;
+        
+        
     }
 }

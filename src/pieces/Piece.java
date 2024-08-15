@@ -1,12 +1,14 @@
 package pieces;
 
+import program.*;
 public class Piece{
 
     String color;
-    String Img;
-
+    String Img = null;
+    imageObject dynamicImage;
     public Piece(){
-        
+     
+     
     }
 
     public Piece(String color){

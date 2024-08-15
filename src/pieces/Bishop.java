@@ -1,12 +1,21 @@
 package pieces;
 
+import program.imageObject;
+
 public class Bishop extends Piece{
-    int image;
-    int moves;
+    
 
     public Bishop(String color){
-        super(color);
-
+    	super(color);
+    	if(color.equals("white")){
+    		this.Img = "./src/img/z-White-bishop-chess.png";
+    	}
+    	else {
+    		Img = "./src/img/z-Black-bishop-chess.png";
+    	}
+    	
+    	
+    	
 }
     public String toString(){
         return "Bishop";
