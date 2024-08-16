@@ -1,5 +1,14 @@
 package program;
 
+import javax.swing.JFrame;
+import java.awt.Image;
+import javax.swing.ImageIcon;
+
+
+import java.io.BufferedInputStream;////////////////////
+
+
+
 import pieces.*;
 
 public class Chess {
@@ -246,7 +255,7 @@ public class Chess {
         		+ "Pawnwhite Pawnwhite Pawnwhite Pawnwhite Pawnwhite Pawnwhite Pawnwhite Pawnwhite \r\n"
         		+ "null null null null null null null null \r\n"
         		+ "null null null null null null null null \r\n"
-        		+ "null null null null null null null null \r\n"
+        		+ "null null null Pawnwhite null null null null \r\n"
         		+ "null null null null null null null null \r\n"
         		+ "Pawnblack Pawnblack Pawnblack Pawnblack Pawnblack Pawnblack Pawnblack Pawnblack \r\n"
         		+ "Rookblack Knightblack Bishopblack Queenblack Kingblack Bishopblack Knightblack Rookblack ");

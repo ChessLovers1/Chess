@@ -8,6 +8,9 @@ import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
     
@@ -42,6 +45,8 @@ public class ChessBoardPanel extends JPanel {
     
     private Image blackPawn;
     private Image whitePawn;
+  
+    private imageObject[][] Board = new imageObject[8][8];
   
     private imageObject[][] Board = new imageObject[8][8];
 
@@ -362,7 +367,9 @@ for (int xvalue = 0; xvalue<8; xvalue++) {
         int vary;
         for (int xvalue = 0; xvalue<8; xvalue++) {
         	
+        	
             vary = xvalue * 80 + 87 ;  
+            
             
         	//Checks the y value
             for (int yvalue = 0; yvalue<8; yvalue++) {

@@ -3,6 +3,9 @@ package program;
 import java.awt.*; 
 import java.awt.event.*; 
 import javax.swing.*; 
+import java.awt.*; 
+import java.awt.event.*; 
+import javax.swing.*; 
 import java.awt.Canvas;
 import java.awt.Toolkit;
 import java.awt.Color;
@@ -15,6 +18,11 @@ public class GUI extends JFrame {
     public GUI() {
     	super("Chess"); 
     	
+    	ChessBoardPanel test = new ChessBoardPanel();
+        
+    	add(test);
+    	//imageObject a =  new imageObject(new ImageIcon("./src/img/z-White-queen-chess.png").getImage(), 0,0) ;
+    	//add(a);
     	ChessBoardPanel test = new ChessBoardPanel();
         
     	add(test);
@@ -59,6 +67,36 @@ public class GUI extends JFrame {
         
         
         
+        
+        /*
+        frame.setLayout(new FlowLayout());
+        
+        ChessBoardPanel horse = new ChessBoardPanel();
+        imageObject horse2 = new imageObject("./src/img/z-Black-bishop-chess.png",10,10);
+        //frame.getContentPane().add(horse);
+        frame.add(horse);
+        frame.add(horse2);
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
         /*
         frame.setLayout(new FlowLayout());
         
@@ -73,6 +111,7 @@ public class GUI extends JFrame {
         
         
         
+        
         long startTime = System.currentTimeMillis();
         long elapsedTime = 0L;
 
@@ -81,12 +120,14 @@ public class GUI extends JFrame {
             elapsedTime = (new Date()).getTime() - startTime;
         }
 		
+		
         while(true) {
         	
         	horse.moveImg(((GUI)frame).Adapter.x, ((GUI)frame).Adapter.y);
         
         	
         }
+        */
         */
     }
 }
