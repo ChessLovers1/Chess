@@ -48,7 +48,7 @@ public class ChessBoardPanel extends JPanel {
   
     private imageObject[][] Board = new imageObject[8][8];
   
-    private imageObject[][] Board = new imageObject[8][8];
+    
 
     //To get the board intop a var
     Board daBoard = new Board("Rookwhite Knightwhite Bishopwhite Queenwhite Kingwhite Bishopwhite Knightwhite Rookwhite \r\n"

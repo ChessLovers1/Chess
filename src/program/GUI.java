@@ -18,9 +18,7 @@ public class GUI extends JFrame {
     public GUI() {
     	super("Chess"); 
     	
-    	ChessBoardPanel test = new ChessBoardPanel();
-        
-    	add(test);
+    	
     	//imageObject a =  new imageObject(new ImageIcon("./src/img/z-White-queen-chess.png").getImage(), 0,0) ;
     	//add(a);
     	ChessBoardPanel test = new ChessBoardPanel();
@@ -128,7 +126,7 @@ public class GUI extends JFrame {
         	
         }
         */
-        */
+        
     }
 }
 
