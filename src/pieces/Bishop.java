@@ -1,19 +1,22 @@
 package pieces;
 
-import program.imageObject;
+import javax.swing.ImageIcon;
 
 public class Bishop extends Piece{
     
-
+	
     public Bishop(String color){
     	super(color);
     	if(color != null) {
 	    	if(color.equals("white")){
-	    		this.Img = "./src/img/z-White-bishop-chess.png";
+	    		
+	    		this.Img = new ImageIcon("./src/img/z-White-bishop-chess.png").getImage();
 	    	}
 	    	else {
-	    		Img = "./src/img/z-Black-bishop-chess.png";
+	    		Img = new ImageIcon("./src/img/z-Black-bishop-chess.png").getImage();
 	    	}
+	    	
+	    	
     	}
     	
     	

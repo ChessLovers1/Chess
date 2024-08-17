@@ -1,11 +1,11 @@
 package pieces;
 
+import java.awt.Image;
 import program.*;
 public class Piece{
-
+	public int x,y;
     String color;
-    String Img = null;
-    imageObject dynamicImage;
+    public Image Img;
     public Piece(){
      
      
@@ -21,7 +21,7 @@ public class Piece{
         return color;
     }
 
-    public String getImg(){
+    public Image getImg(){
         return Img;
     }
 
