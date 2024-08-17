@@ -3,6 +3,7 @@ package program;
 import pieces.*;
 
 
+
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.MouseAdapter;
@@ -27,34 +28,16 @@ public class ChessBoardPanel extends JPanel {
     //Board
     private Image board;
     
-    //Pieces
-    private Image blackBishop;
-    private Image whiteBishop;
+    
 
-    private Image blackRook;
-    private Image whiteRook;
-    
-    private Image blackKnight;
-    private Image whiteKnight;
-    
-    private Image blackQueen;
-    private Image whiteQueen;
-    
-    private Image blackKing;
-    private Image whiteKing;
-    
-    private Image blackPawn;
-    private Image whitePawn;
-  
-    private imageObject[][] Board = new imageObject[8][8];
   
     
 
     //To get the board intop a var
-    Board daBoard = new Board("Rookwhite Knightwhite Bishopwhite Queenwhite Kingwhite Bishopwhite Knightwhite Rookwhite \r\n"
+    Board Board = new Board("Rookwhite Knightwhite Bishopwhite Queenwhite Kingwhite Bishopwhite Knightwhite Rookwhite \r\n"
     		+ "pawnwhite null Pawnwhite Pawnwhite Pawnwhite Pawnwhite Pawnwhite Pawnwhite \r\n"
     		+ "Pawnblack null null null null null null null \r\n"
-    		+ "null null null null null null null null \r\n"
+    		+ "null null null null Bishopwhite null Rookwhite null \r\n"
     		+ "null null null null null null null null \r\n"
     		+ "Rookblack null null null null null null null \r\n"
     		+ "Pawnblack Pawnblack Pawnblack Pawnblack Pawnblack Pawnblack Pawnblack Pawnblack \r\n"
@@ -62,7 +45,7 @@ public class ChessBoardPanel extends JPanel {
     
     
     
-    Piece[][] List = daBoard.getBoard();
+   
     
     //Pieces
     Piece daPiece = new Piece();
@@ -72,102 +55,29 @@ public class ChessBoardPanel extends JPanel {
         board = obj.getImage();
         
         
-        // Bishop
-        blackBishop = new ImageIcon("./src/img/z-Black-bishop-chess.png").getImage();
-        whiteBishop = new ImageIcon("./src/img/z-White-bishop-chess.png").getImage();
         
-        // Rook
-        blackRook = new ImageIcon("./src/img/z-Black-rook-chess.png").getImage();
-        whiteRook = new ImageIcon("./src/img/z-White-rook-chess.png").getImage();
-        
-        // Knight
-        blackKnight = new ImageIcon("./src/img/z-Black-knight-chess.png").getImage();
-        whiteKnight = new ImageIcon("./src/img/z-White-knight-chess.png").getImage();
-        
-        // Queen
-        blackQueen = new ImageIcon("./src/img/z-Black-queen-chess.png").getImage();
-        whiteQueen = new ImageIcon("./src/img/z-White-queen-chess.png").getImage();
-        
-        // King
-        blackKing = new ImageIcon("./src/img/z-Black-king-chess.png").getImage();
-        whiteKing = new ImageIcon("./src/img/z-White-king-chess.png").getImage();
-        
-        // Pawn
-        blackPawn = new ImageIcon("./src/img/z-Black-pawn-chess.png").getImage();
-        whitePawn = new ImageIcon("./src/img/z-White-pawn-chess.png").getImage();
         
       
         //set up the board
         xDimension = (getWidth() - board.getWidth(this)) / 2;
         yDimension = (getHeight() - board.getHeight(this)) / 2;
         
+        int vary,varx;
+		for (int yvalue = 0; yvalue<8; yvalue++) {
+		        	
+		            vary = 560 - yvalue * 80 + 87 ;  
+		            
+		        	//Checks the y value
+		            for (int xvalue = 0; xvalue<8; xvalue++) {
+		             varx =  xvalue * 80 + 87; 
+		             if(Board.getBoard()[yvalue][xvalue] != null) {
+			             Board.getBoard()[yvalue][xvalue].x = varx;
+			             Board.getBoard()[yvalue][xvalue].y = vary;
+		             }
+		            }
+		            
+			}
         
-        int varx;
-        int vary;
-for (int xvalue = 0; xvalue<8; xvalue++) {
-        	
-            vary = 560 - xvalue * 80 + 87 ;  
-            
-        	//Checks the y value
-            for (int yvalue = 0; yvalue<8; yvalue++) {
-             varx =  yvalue * 80 + 87; 
-             
-             
-         	if (List[xvalue][yvalue] != null) {
-    			
-            	//if (List[x][y] instanceof Bishop) 
-            	if (List[xvalue][yvalue] instanceof Bishop) { 
-            		if (List[xvalue][yvalue].getColor() == "white") //White
-            		{ Board[xvalue][yvalue] = new imageObject(whiteBishop, varx, vary);}
-            		
-            		if (List[xvalue][yvalue].getColor() == "black") //black
-            		{Board[xvalue][yvalue] = new imageObject(blackBishop, varx, vary);}} 
-            	if (List[xvalue][yvalue] instanceof Rook) { 
-            		if (List[xvalue][yvalue].getColor() == "white") //White
-            		{ Board[xvalue][yvalue] = new imageObject(whiteRook, varx, vary);}//Board[y][x] = new imageObject(whiteBishop, x+varx, y+vary);
-            		
-            		if (List[xvalue][yvalue].getColor() == "black") //black
-            		{Board[xvalue][yvalue] = new imageObject(blackRook, varx, vary);}} 
-            	
-            	if (List[xvalue][yvalue] instanceof Queen) { 
-            		if (List[xvalue][yvalue].getColor() == "white") //White
-            		{ Board[xvalue][yvalue] = new imageObject(whiteQueen, varx, vary);}
-            		
-            		if (List[xvalue][yvalue].getColor() == "black") //black
-            		{Board[xvalue][yvalue] = new imageObject(blackQueen, varx, vary);}}
-            	
-            	if (List[xvalue][yvalue] instanceof King) { 
-            		if (List[xvalue][yvalue].getColor() == "white") //White
-            		{ Board[xvalue][yvalue] = new imageObject(whiteKing, varx, vary);}
-            		
-            		if (List[xvalue][yvalue].getColor() == "black") //black
-            		{Board[xvalue][yvalue] = new imageObject(blackKing, varx, vary);}}
-            	
-            	if (List[xvalue][yvalue] instanceof Pawn) { 
-            		if (List[xvalue][yvalue].getColor() == "white") //White
-            		{ Board[xvalue][yvalue] = new imageObject(whitePawn, varx, vary);}
-            		
-            		if (List[xvalue][yvalue].getColor() == "black") //black
-            		{Board[xvalue][yvalue] = new imageObject(blackPawn, varx, vary);}}
-            	
-            	if (List[xvalue][yvalue] instanceof Pawn) { 
-            		if (List[xvalue][yvalue].getColor() == "white") //White
-            		{ Board[xvalue][yvalue] = new imageObject(whitePawn, varx, vary);}
-            		
-            		if (List[xvalue][yvalue].getColor() == "black") //black
-            		{Board[xvalue][yvalue] = new imageObject(blackPawn, varx, vary);}}
-            
-     
-            	if (List[xvalue][yvalue] instanceof Knight) { 
-            		if (List[xvalue][yvalue].getColor() == "white") //White
-            		{ Board[xvalue][yvalue] = new imageObject(whiteKnight, varx, vary);}
-            		
-            		if (List[xvalue][yvalue].getColor() == "black") //black
-            		{Board[xvalue][yvalue] = new imageObject(blackKnight, varx, vary);}}
-         	}
-             
-            }
-		}
 
         
         addMouseMotionListener(new MouseAdapter() { 
@@ -175,8 +85,8 @@ for (int xvalue = 0; xvalue<8; xvalue++) {
          
               x = me.getX();
               y = me.getY();
-              System.out.println("x : "+x+" y : "+y);
-              System.out.println("xDimension "+ xDimension+ " yDimension " + yDimension );
+              //System.out.println("x : "+x+" y : "+y);
+              //System.out.println("xDimension "+ xDimension+ " yDimension " + yDimension );
               
               
               if(position[0] == -1) {
@@ -205,6 +115,9 @@ for (int xvalue = 0; xvalue<8; xvalue++) {
 	              else if(x > xDimension+80*8 && x <xDimension+80*9) {
 	            	  position[1] = 7;
 	              }
+	              else {
+	            	  position[1]=-1;
+	              }
 	              
 	              //Y position
 	              if( y > yDimension+80 && y < yDimension+80*2) {
@@ -231,18 +144,22 @@ for (int xvalue = 0; xvalue<8; xvalue++) {
 	              else if( y > yDimension+80*8 && y < yDimension+80*9) {
 	        		  position[0] = 0;
 	              }
+	              else {
+	            	  position[0]=-1;
+	              }
              
               }
               
               
               
-              if(position[0] != -1) {
+              if(!(position[0] == -1 || position[1] == -1)) {
             	  
             	  
-	              if(Board[position[0]][position[1]] != null) {
-	            	 moveImg(Board[position[0]][position[1]], x-30, y-30); 
+	              if(Board.getBoard()[position[0]][position[1]] != null) {
+	            	 moveImg(Board.getBoard()[position[0]][position[1]], x-30, y-30); 
 	              }
               }
+              
               }});  
         
         
@@ -275,6 +192,9 @@ for (int xvalue = 0; xvalue<8; xvalue++) {
 	              else if(x > xDimension+80*8 && x <xDimension+80*9) {
 	            	  tempPosition[1] = 7;
 	              }
+	              else {
+	            	  tempPosition[1] = -1;
+	              }
 	              
 	              //Y position
 	              if( y > yDimension+80 && y < yDimension+80*2) {
@@ -301,28 +221,47 @@ for (int xvalue = 0; xvalue<8; xvalue++) {
 	              else if( y > yDimension+80*8 && y < yDimension+80*9) {
 	            	  tempPosition[0] = 0;
 	              }
+	              else {
+	            	  tempPosition[0] = -1;
+	              }
 
         		
         		
         		
         		//do stuff to find out if it was a valid move
-        		if(Chess.validMove(daBoard, position[0], position[1], tempPosition[0], tempPosition[1])) {
-        			moveImg(Board[position[0]][position[1]], tempPosition[1]*80+87+xDimension, 560-tempPosition[0]*80+yDimension+87);
-        			//Board[tempPosition[0]][tempPosition[1]] = Board[position[0]][position[1]];
-        			//List[tempPosition[0]][tempPosition[1]] = List[position[0]][position[1]];
+	            if( !(position[0] == -1 || position[1] == -1 || tempPosition[0] == -1 || tempPosition[1] == -1) ) {
+	            	if(Board.getBoard()[position[0]][position[1]] != null) {
+		            	if(Chess.validMove(Board, position[0], position[1], tempPosition[0], tempPosition[1])) {
+		        			moveImg(Board.getBoard()[position[0]][position[1]], tempPosition[1]*80+87+xDimension, 560-tempPosition[0]*80+yDimension+87);
+		        			//Board[tempPosition[0]][tempPosition[1]] = Board[position[0]][position[1]];
+		        			//List[tempPosition[0]][tempPosition[1]] = List[position[0]][position[1]];
+		        		
+		        			//The current problem is that there is two arrays one Piece[][] and one imageObject[][]        fixed
+		        			//This is unnecessary because imageObject is no longer extends jFrame and only stores simple information
+		        			
+		        			
+		        			//the picture for ever piece should be a part of their classes  fixed
+		        			
+		        			
+		        			//after this is fixed it will be easier to swap the position of the pieces and then simply repaint(); after to update the position of the pieces
+		        			Board.getBoard()[tempPosition[0]][tempPosition[1]] = Board.getBoard()[position[0]][position[1]];
+		        			Board.getBoard()[position[0]][position[1]] = null;
+		        		}
+		        		
+		        		
+		        		else if(Board.getBoard()[position[0]][position[1]] != null) {
+			        		moveImg(Board.getBoard()[position[0]][position[1]], position[1]*80+87+xDimension, 560-position[0]*80+yDimension+87);
+		        		}
+	            	}
+	            }
+	            if(!(position[0] == -1 || position[1] == -1)) {
+		            if(Board.getBoard()[position[0]][position[1]] != null) {
+			            if(Board.getBoard()[position[0]][position[1]] != null) {
+			        		moveImg(Board.getBoard()[position[0]][position[1]], position[1]*80+87+xDimension, 560-position[0]*80+yDimension+87);
+		        		}
+		            }
+	            }
         		
-        			//The current problem is that there is two arrays one Piece[][] and one imageObject[][]
-        			//This is unnecessary because imageObject is no longer extends jFrame and only stores simple information
-        			//the picture for ever piece should be a part of their classes
-        			
-        			
-        			//after this is fixed it will be easier to swap the position of the pieces and then simply repaint(); after to update the position of the pieces
-        		}
-        		
-        		
-        		else if(Board[position[0]][position[1]] != null) {
-	        		moveImg(Board[position[0]][position[1]], position[1]*80+87+xDimension, 560-position[0]*80+yDimension+87);
-        		}
         		
         		position[0] = -1;
         		position[1] = -1;
@@ -341,7 +280,7 @@ for (int xvalue = 0; xvalue<8; xvalue++) {
     }
     
     
-    public void moveImg(imageObject piece, int x, int y){
+    public void moveImg(Piece piece, int x, int y){
     	
         piece.x = x-xDimension;
         piece.y = y-yDimension;
@@ -352,8 +291,9 @@ for (int xvalue = 0; xvalue<8; xvalue++) {
         
         
     }
-
     
+  //varx =  yvalue * 80 + 87;
+    //vary = 560 - xvalue * 80 + 87 ;
     
     protected void paintComponent(Graphics g) {//find out what counts as a graphic
         super.paintComponent(g);
@@ -363,27 +303,19 @@ for (int xvalue = 0; xvalue<8; xvalue++) {
        //g.drawImage(Board[xvalue][yvalue].image, Board[xvalue][yvalue].x,  Board[xvalue][yvalue].y,65,65,null); 
        
         g.drawImage(board, xDimension, yDimension, null);
-        int varx;
-        int vary;
-        for (int xvalue = 0; xvalue<8; xvalue++) {
-        	
-        	
-            vary = xvalue * 80 + 87 ;  
-            
-            
-        	//Checks the y value
-            for (int yvalue = 0; yvalue<8; yvalue++) {
-             varx = yvalue * 80 + 87; 
-             g.drawLine(varx+xDimension, vary+yDimension, varx+xDimension, vary+yDimension);
-            }}
         
-        for(int i = 0; i < Board.length; i++) {
-        	for(int z = 0; z < Board[1].length; z++) {
-        		if(Board[z][i] != null) {
-        			
-        			g.drawImage(Board[z][i].image, Board[z][i].x+xDimension,  Board[z][i].y+yDimension,65,65,null); 
-        			
-        			
+        
+        
+        
+        
+        
+        for(int i = 0; i < Board.getBoard().length; i++) {
+        	for(int z = 0; z < Board.getBoard()[1].length; z++) {
+        		if(Board.getBoard()[z][i] != null) {
+        			//it needs to access Piece.x and Piece.y to get updated when you use method moveImg
+        			g.drawImage(Board.getBoard()[z][i].Img, Board.getBoard()[z][i].x+xDimension,  Board.getBoard()[z][i].y+yDimension  ,65,65,null); 
+        			//i*80+87+xDimension, 560-(z*80)+87+yDimension
+        			 
         		}
         	}
         }
