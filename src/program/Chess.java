@@ -145,20 +145,20 @@ public class Chess {
         
         
         //Find direction
-        if(yIni-y<0 || xIni - x == 0){//up
+        if(yIni-y<0 && xIni - x == 0){//up
             //Direction = "up";
         	result = isNotObstructed(board,yIni,xIni,y,x,1,0);
         	System.out.print("up");
         }
-        else if(yIni - y>0 || xIni - x == 0){//down
+        else if(yIni - y>0 && xIni - x == 0){//down
         	result = isNotObstructed(board,yIni,xIni,y,x,-1,0);
         	System.out.print("down");
         }
-        else if(xIni-x<0 || yIni - y == 0){//right
+        else if(xIni-x<0 && yIni - y == 0){//right
         	result = isNotObstructed(board,yIni,xIni,y,x,0,1);
         	System.out.print("right");
         }
-        else if(xIni - x>0 || yIni - y == 0){//left
+        else if(xIni - x>0 && yIni - y == 0){//left
         	result = isNotObstructed(board,yIni,xIni,y,x,0,-1);
         	System.out.print("left");
         }
@@ -183,24 +183,24 @@ public class Chess {
             return false;
         }
         
-       
+        
         
         
         //Find direction
-        if(yIni-y <0 || xIni - x > 0){//up left
+        if(yIni-y <0 && xIni - x > 0){//up left
             //Direction = "up";
         	result = isNotObstructed(board,yIni,xIni,y,x,1,-1);
         	System.out.print("upL");
         }
-        else if(yIni - y <0 || xIni - x < 0){//up right
+        else if(yIni - y <0 && xIni - x < 0){//up right
         	result = isNotObstructed(board,yIni,xIni,y,x,1,1);
         	System.out.print("upR");
         }
-        else if( yIni - y > 0 || xIni-x > 0){//down left
+        else if( yIni - y > 0 && xIni-x > 0){//down left
         	result = isNotObstructed(board,yIni,xIni,y,x,-1,-1);
         	System.out.print("downL");
         }
-        else if(yIni - y > 0 || xIni - x < 0){//down right
+        else if(yIni - y > 0 && xIni - x < 0){//down right
         	result = isNotObstructed(board,yIni,xIni,y,x,-1,1);
         	System.out.print("downR");
         }
