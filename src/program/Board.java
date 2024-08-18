@@ -149,7 +149,15 @@ Rook Knight Bishop Queen King Bishop Knight Rook
     }
 
 
+    /**
+     * @param j
+     * @param i
+     * @return Board[j][i]		null if out of index
+     */
     public Piece getPiece(int j, int i){
+    	if( !(j <= 7 && j >= 0 && i <= 7 && i >= 0) ) {
+    		return null;
+    	}
         return Board[j][i];
     }
 
