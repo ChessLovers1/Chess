@@ -1,5 +1,6 @@
 package program;
 
+import pieces.Knight;
 import javax.swing.JFrame;
 import java.awt.Image;
 import javax.swing.ImageIcon;
@@ -12,35 +13,41 @@ import java.io.BufferedInputStream;////////////////////
 import pieces.*;
 
 public class Chess {
-    /* 
-
-
-
-
-    GameState
-
-        Problem 1: Turns
-            (What if we used odd and even numbers?)
-            (Odd number = Player Turn, even number = computer Turn) 
-            (We just setup a counter that goes up by 1 per turn and we use the % to find out which players turn is up!)
-
-    Rules that get checked every turn 
-
-        Problem 1: Is King in check?
-            (We just check the kings current posititon with all the opposing pieces attacking tiles)
-            (We will need to make sure pieces can be moved to protect the king as well) ??
-            (If king is in check and has no possible moves then he loses)
-        
-        Problem 2: Stalemate
-            (If king has no pieces that can move and cant move himself without being in check)
-
-    */
-
-	//public static boolean canMove() {
-		//Method that 
-	//}
+    
 	
-    public static boolean validMove(Board board ,int turn , int yIni,int xIni,int y,int x ){
+	 /**
+	  * Main method to be used in ChessBoardPanel when the mouse button get released
+	  * 
+	 * @param board		the Board state
+	 * @param turn		What turn it is
+	 * @param yIni		starting coord
+	 * @param xIni		starting coord
+	 * @param y			Destination
+	 * @param x			Destination
+	 * @return			true if the move is valid
+	 */
+	public static boolean validMove(Board board ,int turn , int yIni,int xIni,int y,int x ){
+		 
+		 if(isInCheck(board) == 0) {
+			 System.out.println("whiteInCheck");
+		 }
+		 else if(isInCheck(board) == 1) {
+			 System.out.println("blackInCheck");
+		 }
+		 else if(isInCheck(board) == 2) {
+			 System.out.println("bothInCheck");
+		 }
+	
+		
+		 
+		 return canCapture(board, turn, yIni, xIni, y, x);
+	 
+	 }
+	 
+	 
+	 
+	 
+    public static boolean canCapture(Board board ,int turn , int yIni,int xIni,int y,int x ){
     	
         boolean result = false;
     	Piece piece = board.getPiece(yIni, xIni);
@@ -55,7 +62,7 @@ public class Chess {
         //1. Check if There is a piece on the final square
         //2.Check if the pieces are different colors
     	if(!validCapture(board,yIni,xIni,y,x )) {
-    		System.out.println("not valid colors");
+    		
     		return false;
     	}
 
@@ -80,7 +87,7 @@ public class Chess {
         	//System.out.println("Knight");
         	result = knightMove(board,yIni,xIni,y,x );
         }
-        else if(piece.getClass() == new Knight(null).getClass()){
+        else if(piece.getClass() == new King(null).getClass()){
         	//System.out.println("King");
         	result = kingMove(board,yIni,xIni,y,x );
         }
@@ -89,27 +96,104 @@ public class Chess {
         	System.out.print("initial coords has an object Piece that is unidentified");
         	result = false;
         }
+        
+        
+        
+        //if true and its a pawn on the last rank do call promote
+        
         return result;
     }
-    /*
+    
+    
+    /**
+     * 
+     * @param board
+     * @return 			-1 if not in check 		0 is white is in check		 1 if black is in check		2 if both are in check
+     */
     public static int isInCheck(Board board) {
-    	// if white is in check return 1; if no checks return 0; if black check return -1;
+
+    	int result = -1;
+    	
     	for(int j = 0; j < 8 ; j++) {
     		
     		for(int i = 0; i < 8 ; i++) {
     			
-    			if(board.getPiece(j, i).getClass() == new King(null).getClass()) {
-    				String color = board.getPiece(j, i).getColor();
-    				//not finished
-    				
-    				isObstructed(board, j , i , 8 , i, 1, 0 );
-    				
+    			//find the index of the king
+    			if(board.getPiece(j, i) != null) {
+	    			if(board.getPiece(j, i).getClass() == new King(null).getClass()) {
+	    				String color = board.getPiece(j, i).getColor();
+	    				
+	    				if(checkDirection(board, j, i, 1, 0) == true || checkDirection(board, j, i, -1, 0) == true ||
+	    				   checkDirection(board, j, i, 0, 1) == true || checkDirection(board, j, i, 0, -1) == true ||
+	    				   checkDirection(board, j, i, 1, 1) == true || checkDirection(board, j, i, -1, -1) == true ||
+	    				   checkDirection(board, j, i, 1, -1) == true || checkDirection(board, j, i, -1, 1) == true) {//add knight moves
+	    					
+	    					if(color == "white") {
+	    						
+	    						if(result == -1) {
+	    							result = 0;
+	    						}
+	    						else if(result == 1) {
+	    							result = 2;
+	    						}
+	    						
+	    					}
+	    					else {
+	    						
+	    						if(result == -1) {
+	    							result = 1;
+	    						}
+	    						else if(result == 0) {
+	    							result = 2;
+	    						}
+	    						
+	    					}
+	    				}
+	    				result = findHorse(board, result, j, i, 2, -1);
+	    				result = findHorse(board, result, j, i, -2, 1);
+	    				result = findHorse(board, result, j, i, 2, 1);
+	    				result = findHorse(board, result, j, i, -2, -1);
+	    				result = findHorse(board, result, j, i, 1, -2);
+	    				result = findHorse(board, result, j, i, -1, 2);
+	    				result = findHorse(board, result, j, i, -1, -2);
+	    				result = findHorse(board, result, j, i,1 , 2);
+	    			}
     			}
-    		}
-    	}
+    		}}
+    	
+    	
+    	return result;
     	
     }
-    */
+    
+    public static int findHorse(Board board, int result, int j, int i, int y, int x) {
+    	
+    	if(j +y >= 0 && j + y <=7 && i + x >= 0 && i + x <= 7) {
+    		if( board.getPiece(j + y, i + x) != null) {
+				if( board.getPiece(j + y, i+ x).getClass() ==  new Knight("").getClass() ) {
+					
+					if(board.getPiece(j , i).getColor() == "white" && board.getPiece(j + y, i+ x).getColor() == "black" ) {
+						if(result == -1) {
+							result = 0;
+						}
+						else if(result == 1) {
+							result = 2;
+						}
+					}
+					else if(board.getPiece(j, i).getColor() == "black" && board.getPiece(j + y, i+ x).getColor() == "white" ) {
+						if(result == -1) {
+							result = 1;
+						}
+						else if( result == 0){
+							result = 2;
+						}
+					}
+				}
+    		}
+		}
+    	return result;
+    }
+    
     /*
     private static int[] findClosestPiece(Board board,int yIni,int xIni,int yStep,int xStep) {
     	int[] result = new int[2];
@@ -127,7 +211,23 @@ public class Chess {
     
     
     private static boolean kingMove(Board board,int yIni,int xIni,int y,int x){
-        return true;
+    	boolean result = false;
+
+        if(yIni <0 || yIni >7 || xIni <0 || xIni >7){
+            throw new IndexOutOfBoundsException("The rook starting position is not on the board");
+        }
+        if(y <0 || y >7 || x <0 || x >7){
+            throw new IndexOutOfBoundsException("The rook destination is not on the board");
+        }
+        
+        if(yIni == y && xIni == x){//the piece has not moved
+            return false;
+        }
+        
+        if(yIni - y <= 1 && yIni - y >= -1 && xIni - x <= 1 && xIni - x >= -1) {
+        	return true;
+        }
+        return result;
     }
 
     private static boolean rookMove(Board board,int yIni,int xIni,int y,int x){
@@ -163,7 +263,7 @@ public class Chess {
         	result = isNotObstructed(board,yIni,xIni,y,x,0,1);
         	System.out.print("right");
         }
-        else if(xIni - x>0 && yIni - y == 0){//left
+        else if(xIni - x>0 && yIni - y == 0){//left 
         	result = isNotObstructed(board,yIni,xIni,y,x,0,-1);
         	System.out.print("left");
         }
@@ -334,7 +434,9 @@ public class Chess {
     	if(board.getPiece(y, x) == null) {
     		return true;
     	}
-    	
+    	if(board.getPiece(yIni, xIni) == null) {
+    		return false;
+    	}
     	if(board.getPiece(y, x).getColor() != board.getPiece(yIni, xIni).getColor()) {
     		return true;
     	}
@@ -345,7 +447,7 @@ public class Chess {
     
     private static boolean isNotObstructed(Board board, int yIni, int xIni, int y, int x, int yStep,int xStep){
         //      the next step is y x                   make sure it in range
-    	while(!(yIni == y-yStep && xIni == x-xStep) && (yIni < 7 && yIni >= 0 && xIni < 7 && xIni >= 0)) {
+    	while(!(yIni == y-yStep && xIni == x-xStep) && (yIni <= 7 && yIni >= 0 && xIni <= 7 && xIni >= 0)) {
     		xIni += xStep;
     		yIni += yStep;
     		
@@ -368,78 +470,49 @@ public class Chess {
     	return false;
     }
     
+    /**
+     * method used by isInCheck to see if anything is checking the king in a certain direction
+     * @param board
+     * @param yIni
+     * @param xIni
+     * @param yStep
+     * @param xStep
+     * @return true if the king is getting checked
+     */
+    private static boolean checkDirection(Board board, int yIni, int xIni,  int yStep,int xStep){
+        //      the next step is y x                   make sure it in range
+    	int x = xIni;
+    	int y = yIni;
+    	while((x <= 7 && y >= 0 && x <= 7 && x >= 0)) {
+    		x += xStep;
+    		y += yStep;
+    		
+    		
+    		if(y == 8 || y == -1 || x == 8 || x == -1) {
+    			return false;
+    		}
+            
+    		//if there is a piece is the way this will return false
+    		if(board.getPiece(yIni, xIni) != null) {
+    			 if(canCapture(board, -1, y, x, yIni, xIni)) {
+    				 //System.out.println(board.getPiece(y, x) + "  hi");
+    				 return true;
+    			 }
+    		}
+    			
+    	}
+    	
+    	
+    	return false;
+    }
+    
     
     /**
      * @param args
      */
     public static void main(String[] args) {
     	
-        Board test = new Board("Rookwhite Knightwhite Bishopwhite Queenwhite Kingwhite Bishopwhite Knightwhite Rookwhite \r\n"
-        		+ "Pawnwhite Pawnwhite Pawnwhite Pawnwhite Pawnwhite Pawnwhite Pawnwhite Pawnwhite \r\n"
-        		+ "null null null null null null null null \r\n"
-        		+ "null null null null null null null null \r\n"
-        		+ "null null null Pawnwhite null null null null \r\n"
-        		+ "null null null null null null null null \r\n"
-        		+ "Pawnblack Pawnblack Pawnblack Pawnblack Pawnblack Pawnblack Pawnblack Pawnblack \r\n"
-        		+ "Rookblack Knightblack Bishopblack Queenblack Kingblack Bishopblack Knightblack Rookblack ");
-
-        System.out.print("test");//False
-        System.out.println(validMove(test,1, 0, 0, 2, 0));
         
-
-        
-        Board test1 = new Board("Rookwhite Knightwhite Bishopwhite Queenwhite Kingwhite Bishopwhite Knightwhite Rookwhite \r\n"
-        		+ "null Pawnwhite Pawnwhite Pawnwhite Pawnwhite Pawnwhite Pawnwhite Pawnwhite \r\n"
-        		+ "null null null null null null null null \r\n"
-        		+ "null null null null null null null null \r\n"
-        		+ "null null null null null null null null \r\n"
-        		+ "Rookblack null null null null null null null \r\n"
-        		+ "Pawnblack Pawnblack Pawnblack Pawnblack Pawnblack Pawnblack Pawnblack Pawnblack \r\n"
-        		+ "null Knightblack Bishopblack Queenblack Kingblack Bishopblack Knightblack Rookblack ");
-
-        System.out.println("test1");//true
-        System.out.println(validMove(test1,1, 0, 0, 4, 0)+"\r\n");
-        
-        
-        Board test2 = new Board("Rookwhite Knightwhite Bishopwhite Queenwhite Kingwhite Bishopwhite Knightwhite Rookwhite \r\n"
-        		+ "pawnwhite null Pawnwhite Pawnwhite Pawnwhite Pawnwhite Pawnwhite Pawnwhite \r\n"
-        		+ "null null null null null null null null \r\n"
-        		+ "null null null null null null null null \r\n"
-        		+ "null null null null null null null null \r\n"
-        		+ "Rookblack null null null null null null null \r\n"
-        		+ "Pawnblack Pawnblack Pawnblack Pawnblack Pawnblack Pawnblack Pawnblack Pawnblack \r\n"
-        		+ "null Knightblack Bishopblack Queenblack Kingblack Bishopblack Knightblack Rookblack ");
-
-        System.out.println("test2");//true
-        System.out.println(validMove(test2,1, 0, 2, 2, 0)+"\r\n");
-        
-        
-        
-        Board test3 = new Board("Rookwhite Knightwhite Bishopwhite Queenwhite Kingwhite Bishopwhite Knightwhite Rookwhite \r\n"
-        		+ "pawnwhite null Pawnwhite Pawnwhite Pawnwhite Pawnwhite Pawnwhite Pawnwhite \r\n"
-        		+ "pawnblack null null null null null null null \r\n"
-        		+ "null null null null null null null null \r\n"
-        		+ "null null null null null null null null \r\n"
-        		+ "Rookblack null null null null null null null \r\n"
-        		+ "Pawnblack Pawnblack Pawnblack Pawnblack Pawnblack Pawnblack Pawnblack Pawnblack \r\n"
-        		+ "null Knightblack Bishopblack Queenblack Kingblack Bishopblack Knightblack Rookblack ");
-
-        System.out.println("test3");//True
-        System.out.println(validMove(test3, 1,0, 2, 2, 0)+"\r\n");
-        //System.out.println(validCapture(test3,0,3,2,0 ));
-        
-        
-        Board test4 = new Board("Rookwhite Knightwhite Bishopwhite Queenwhite Kingwhite Bishopwhite Knightwhite Rookwhite \r\n"
-        		+ "Pawnwhite Pawnwhite Pawnwhite Pawnwhite Pawnwhite Pawnwhite Pawnwhite Pawnwhite \r\n"
-        		+ "pawnblack null null null null null null null \r\n"
-        		+ "null null null null null null null null \r\n"
-        		+ "null null null null null null null null \r\n"
-        		+ "Rookblack null null null null null null null \r\n"
-        		+ "Pawnblack Pawnblack Pawnblack Pawnblack Pawnblack Pawnblack Pawnblack Pawnblack \r\n"
-        		+ "null Knightblack Bishopblack Queenblack Kingblack Bishopblack Knightblack Rookblack ");
-
-        System.out.println("test4");//False
-        System.out.println(validMove(test4, 1,0, 2, 2, 0)+"\r\n");
         
         
         
