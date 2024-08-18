@@ -231,7 +231,7 @@ public class ChessBoardPanel extends JPanel {
         		//do stuff to find out if it was a valid move
 	            if( !(position[0] == -1 || position[1] == -1 || tempPosition[0] == -1 || tempPosition[1] == -1) ) {
 	            	if(Board.getBoard()[position[0]][position[1]] != null) {
-		            	if(Chess.validMove(Board, position[0], position[1], tempPosition[0], tempPosition[1])) {
+		            	if(Chess.validMove(Board,1, position[0], position[1], tempPosition[0], tempPosition[1])) {
 		        			moveImg(Board.getBoard()[position[0]][position[1]], tempPosition[1]*80+87+xDimension, 560-tempPosition[0]*80+yDimension+87);
 		        			//Board[tempPosition[0]][tempPosition[1]] = Board[position[0]][position[1]];
 		        			//List[tempPosition[0]][tempPosition[1]] = List[position[0]][position[1]];
