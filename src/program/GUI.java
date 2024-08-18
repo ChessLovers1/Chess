@@ -28,7 +28,7 @@ public class GUI extends JFrame {
     	//add(a);
     	//setExtendedState(JFrame.MAXIMIZED_BOTH);//Fullscreen
     	//Toolkit.getDefaultToolkit().getScreenSize
-        setSize(850,600 ); // Set your desired size
+        setSize(850,850 ); // Set your desired size
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Close the application when the window is closed
         setLocationRelativeTo(null); // Center the window on the screen
         
