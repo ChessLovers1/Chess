@@ -15,40 +15,58 @@ import java.awt.event.MouseEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
     
+
+
 public class ChessBoardPanel extends JPanel {
+    /**
+     *x position of the mouse that only updates when the mouse is being dragged 
+     */
     public int x;
 
+    /**
+     * y position of the mouse that only updates when the mouse is being dragged 
+     */
     public int y;
     
+    /**
+     * tempPosition records the index where the cursor button was released
+     */
     int[] tempPosition = new int[2];
+    
+    /**
+     * Position records the index where the Piece being dragged was initially
+     */
     int[] position = new int[] {-1,-1}; 
+    
+    /**
+     * Dimension of the board
+     */
     int xDimension = 0;
     
+    /**
+     * Dimension of the board
+     */
     int yDimension = 0;
-    //Board
+    
+    
     private Image board;
     
-    
+   
+    /**
+     * this variable is so that the image that is moving shows up on top of every other image
+     */
+    int[] prioIndex = new int[] {-1};
 
   
     
 
-    //To get the board intop a var
-    Board Board = new Board("Rookwhite Knightwhite Bishopwhite Queenwhite Kingwhite Bishopwhite Knightwhite Rookwhite \r\n"
-    		+ "pawnwhite null Pawnwhite Pawnwhite Pawnwhite Pawnwhite Pawnwhite Pawnwhite \r\n"
-    		+ "Pawnblack null null null null null null null \r\n"
-    		+ "null null null null Bishopwhite null Rookwhite null \r\n"
-    		+ "null null null null null null null null \r\n"
-    		+ "Rookblack null null null null null null null \r\n"
-    		+ "Pawnblack Pawnblack Pawnblack Pawnblack Pawnblack Pawnblack Pawnblack Pawnblack \r\n"
-    		+ "null Knightblack Bishopblack Queenblack Kingblack Bishopblack Knightblack Rookblack ");    
+    
+    /**
+     * @see Board.java
+     */
+    Board Board = new Board();    
     
     
-    
-   
-    
-    //Pieces
-    Piece daPiece = new Piece();
     
     public ChessBoardPanel() {
         ImageIcon obj = new ImageIcon("./src/img/z-chessBoardV1.png");
@@ -156,7 +174,7 @@ public class ChessBoardPanel extends JPanel {
             	  
             	  
 	              if(Board.getBoard()[position[0]][position[1]] != null) {
-	            	 moveImg(Board.getBoard()[position[0]][position[1]], x-30, y-30); 
+	            	 moveImg(new int [] {position[0], position[1]}, x-30, y-30); 
 	              }
               }
               
@@ -232,7 +250,7 @@ public class ChessBoardPanel extends JPanel {
 	            if( !(position[0] == -1 || position[1] == -1 || tempPosition[0] == -1 || tempPosition[1] == -1) ) {
 	            	if(Board.getBoard()[position[0]][position[1]] != null) {
 		            	if(Chess.validMove(Board,1, position[0], position[1], tempPosition[0], tempPosition[1])) {
-		        			moveImg(Board.getBoard()[position[0]][position[1]], tempPosition[1]*80+87+xDimension, 560-tempPosition[0]*80+yDimension+87);
+		        			moveImg(new int [] {position[0], position[1]}, tempPosition[1]*80+87+xDimension, 560-tempPosition[0]*80+yDimension+87);
 		        			//Board[tempPosition[0]][tempPosition[1]] = Board[position[0]][position[1]];
 		        			//List[tempPosition[0]][tempPosition[1]] = List[position[0]][position[1]];
 		        		
@@ -250,14 +268,14 @@ public class ChessBoardPanel extends JPanel {
 		        		
 		        		
 		        		else if(Board.getBoard()[position[0]][position[1]] != null) {
-			        		moveImg(Board.getBoard()[position[0]][position[1]], position[1]*80+87+xDimension, 560-position[0]*80+yDimension+87);
+			        		moveImg(new int [] {position[0], position[1]}, position[1]*80+87+xDimension, 560-position[0]*80+yDimension+87);
 		        		}
 	            	}
 	            }
 	            if(!(position[0] == -1 || position[1] == -1)) {
 		            if(Board.getBoard()[position[0]][position[1]] != null) {
 			            if(Board.getBoard()[position[0]][position[1]] != null) {
-			        		moveImg(Board.getBoard()[position[0]][position[1]], position[1]*80+87+xDimension, 560-position[0]*80+yDimension+87);
+			        		moveImg( new int [] {position[0], position[1]}, position[1]*80+87+xDimension, 560-position[0]*80+yDimension+87);
 		        		}
 		            }
 	            }
@@ -280,8 +298,19 @@ public class ChessBoardPanel extends JPanel {
     }
     
     
-    public void moveImg(Piece piece, int x, int y){
-    	
+    /**
+     * this method changes the x and y coordinates in the desired Piece 
+     * so that when we repaint it moves dynamically
+     * 
+     * @param prioIndex		index of the moving Piece
+     * @param x			 	coordinate
+     * @param y				coordinate
+     * 
+     * 
+     */
+    public void moveImg(int[] prioIndex, int x, int y){
+    	this.prioIndex = prioIndex;
+    	Piece piece = Board.getBoard()[prioIndex[0]][prioIndex[1]];
         piece.x = x-xDimension;
         piece.y = y-yDimension;
          
@@ -292,34 +321,45 @@ public class ChessBoardPanel extends JPanel {
         
     }
     
-  //varx =  yvalue * 80 + 87;
-    //vary = 560 - xvalue * 80 + 87 ;
+
     
     protected void paintComponent(Graphics g) {//find out what counts as a graphic
         super.paintComponent(g);
+        
+        //xDimension and yDimension are here so it gets updated every time the window changes dimensions
         xDimension = (getWidth() - board.getWidth(this)) / 2;
         yDimension = (getHeight() - board.getHeight(this)) / 2;
         
-       //g.drawImage(Board[xvalue][yvalue].image, Board[xvalue][yvalue].x,  Board[xvalue][yvalue].y,65,65,null); 
-       
+        
         g.drawImage(board, xDimension, yDimension, null);
         
         
-        
-        
-        
-        
         for(int i = 0; i < Board.getBoard().length; i++) {
+        	
         	for(int z = 0; z < Board.getBoard()[1].length; z++) {
-        		if(Board.getBoard()[z][i] != null) {
-        			//it needs to access Piece.x and Piece.y to get updated when you use method moveImg
-        			g.drawImage(Board.getBoard()[z][i].Img, Board.getBoard()[z][i].x+xDimension,  Board.getBoard()[z][i].y+yDimension  ,65,65,null); 
-        			//i*80+87+xDimension, 560-(z*80)+87+yDimension
-        			 
+        		if(Board.getBoard()[i][z] != null) {
+        			
+        			//doesn't draw image if its moving
+        			if( !(prioIndex[0] != -1 && Board.getBoard()[prioIndex[0]][prioIndex[1]] != null  && prioIndex[0] == i && prioIndex[1] == z) ) {
+                		
+        				g.drawImage(Board.getBoard()[i][z].Img, Board.getBoard()[i][z].x+xDimension,  Board.getBoard()[i][z].y+yDimension  ,65,65,null);
+        				
+	        			
+        			}
+        			
         		}
-        	}
-        }
-           
+        	}}
+        
+        
+        //draws moving image so it overlaps every other image
+        if(prioIndex[0] != -1 && Board.getBoard()[prioIndex[0]][prioIndex[1]] != null  ) {
+        		
+            	g.drawImage(Board.getBoard()[prioIndex[0]][prioIndex[1]].Img, Board.getBoard()[prioIndex[0]][prioIndex[1]].x+xDimension,  Board.getBoard()[prioIndex[0]][prioIndex[1]].y+yDimension  ,65,65,null);
+            	prioIndex = new int[] {-1};
+        	
+        	
+        }  
+        
     }
     
 }
