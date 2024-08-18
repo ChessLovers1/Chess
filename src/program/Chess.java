@@ -40,7 +40,7 @@ public class Chess {
 		//Method that 
 	//}
 	
-    public static boolean validMove(Board board,int yIni,int xIni,int y,int x ){
+    public static boolean validMove(Board board ,int turn , int yIni,int xIni,int y,int x ){
     	
         boolean result = false;
     	Piece piece = board.getPiece(yIni, xIni);
@@ -61,25 +61,30 @@ public class Chess {
 
         //check if valid move for that specific piece
         if(piece.getClass() == new Queen(null).getClass()){
-        	System.out.println("Queen");
-        	result = false;
+        	//System.out.println("Queen");
+        	result = rookMove(board,yIni,xIni,y,x ) ||bishopMove(board,yIni,xIni,y,x );
         }
         else if(piece.getClass() == new Rook(null).getClass()){
-        	System.out.println("Rook");
+        	//System.out.println("Rook");
         	result = rookMove(board,yIni,xIni,y,x );
         }
         else if(piece.getClass() == new Pawn(null).getClass()){
-        	System.out.println("Pawn");
-        	result = false;
+        	//System.out.println("Pawn");
+        	result = pawnMove(board ,turn , yIni ,xIni,y,x );
         }
         else if(piece.getClass() == new Bishop(null).getClass()){
-        	System.out.println("bishop");
+        	//System.out.println("bishop");
         	result = bishopMove(board,yIni,xIni,y,x );
         }
         else if(piece.getClass() == new Knight(null).getClass()){
-        	System.out.println("Knight");
-        	result = false;
+        	//System.out.println("Knight");
+        	result = knightMove(board,yIni,xIni,y,x );
         }
+        else if(piece.getClass() == new Knight(null).getClass()){
+        	//System.out.println("King");
+        	result = kingMove(board,yIni,xIni,y,x );
+        }
+        
         else{
         	System.out.print("initial coords has an object Piece that is unidentified");
         	result = false;
@@ -169,6 +174,88 @@ public class Chess {
         return result;
     }
     
+    private static boolean pawnMove(Board board,int turn, int yIni,int xIni,int y,int x){
+        boolean result = false;
+
+        if(yIni <0 || yIni >7 || xIni <0 || xIni >7){
+            throw new IndexOutOfBoundsException("The rook starting position is not on the board");
+        }
+        if(y <0 || y >7 || x <0 || x >7){
+            throw new IndexOutOfBoundsException("The rook destination is not on the board");
+        }
+        
+        if(yIni == y && xIni == x){//the piece has not moved
+            return false;
+        }
+        
+        
+        //black
+        if(board.getBoard()[yIni][xIni].getColor() == "black") {
+        	
+        	//move 1
+        	if(yIni-y == 1 && xIni - x == 0) {
+        		result = isNotObstructed(board,yIni,xIni,y,x,-1,0);
+        		System.out.print("move1");
+        	}
+        	//move 2
+        	else if(yIni - y == 2 && xIni - x == 0 && yIni == 6) {
+        		result = isNotObstructed(board,yIni,xIni,y,x,-1,0);
+        		System.out.print("move2");
+        		((Pawn)board.getBoard()[yIni][xIni]).jump  = turn;
+        	}
+        	//capture left
+        	else if(yIni - y == 1 && xIni - x == -1) {
+        		if(board.getBoard()[y][x] != null && board.getBoard()[y][x].getColor() == "white") {
+        				result = true;
+        		}
+        		System.out.print("capture left");
+        	}
+        	//capture right
+        	else if(yIni - y == 1 && xIni - x == 1) {
+        		if(board.getBoard()[y][x] != null && board.getBoard()[y][x].getColor() == "white") {
+    				result = true;
+        		}
+        		System.out.print("capture right");
+        	}
+        }
+        
+        //white
+        else if(board.getBoard()[yIni][xIni].getColor() == "white") {
+        	
+        	//move 1
+        	if(yIni-y == -1 && xIni - x == 0) {
+        		result = isNotObstructed(board,yIni,xIni,y,x,1,0);
+        		System.out.print("move1");
+        	}
+        	//move 2
+        	else if(yIni - y == -2 && xIni - x == 0 && yIni == 1) {
+        		result = isNotObstructed(board,yIni,xIni,y,x,1,0);
+        		System.out.print("move2");
+        		((Pawn)board.getBoard()[yIni][xIni]).jump  = turn;
+        	}
+        	//capture left
+        	else if(yIni - y == -1 && xIni - x == 1) {
+        		if(board.getBoard()[y][x] != null && board.getBoard()[y][x].getColor() == "black") {
+        				result = true;
+        		}
+        		System.out.print("capture left");
+        	}
+        	//capture right
+        	else if(yIni - y == -1 && xIni - x == -1) {
+        		if(board.getBoard()[y][x] != null && board.getBoard()[y][x].getColor() == "black") {
+    				result = true;
+        		}
+        		System.out.print("capture right");
+        	}
+        }
+        else {
+        
+            result = false;
+        }
+   
+        return result;
+    }
+    
     private static boolean bishopMove(Board board,int yIni,int xIni,int y,int x){
         boolean result = false;
 
@@ -210,6 +297,37 @@ public class Chess {
    
         return result;
     }
+    
+    private static boolean knightMove(Board board,int yIni,int xIni,int y,int x){
+        boolean result = false;
+
+        if(yIni <0 || yIni >7 || xIni <0 || xIni >7){
+            throw new IndexOutOfBoundsException("The rook starting position is not on the board");
+        }
+        if(y <0 || y >7 || x <0 || x >7){
+            throw new IndexOutOfBoundsException("The rook destination is not on the board");
+        }
+        
+        if(yIni == y && xIni == x){//the piece has not moved
+            return false;
+        }
+        
+        if( yIni - y == 2 && xIni - x == -1 || yIni - y == 1 && xIni - x == -2 ||
+        	yIni - y == 2 && xIni - x == 1 || yIni - y == 1 && xIni - x == 2 ||
+        	yIni - y == -2 && xIni - x == -1 || yIni - y == -1 && xIni - x == -2 ||
+        	yIni - y == -2 && xIni - x == 1 || yIni - y == -1 && xIni - x == 2) {
+        	result = true;
+        }
+        else {
+        	result = false;
+        }
+        
+        
+        
+   
+        return result;
+    }
+    
     private static boolean validCapture(Board board,int yIni,int xIni,int y,int x ) {
     	//if there is no pieces at the destination than return true
     	//The piece at the destination need to be different than the piece traveling there
@@ -227,10 +345,15 @@ public class Chess {
     
     private static boolean isNotObstructed(Board board, int yIni, int xIni, int y, int x, int yStep,int xStep){
         //      the next step is y x                   make sure it in range
-    	while(!(yIni == y-yStep && xIni == x-xStep) && (yIni < 8 && yIni >= 0 && xIni < 8 && xIni >= 0)) {
+    	while(!(yIni == y-yStep && xIni == x-xStep) && (yIni < 7 && yIni >= 0 && xIni < 7 && xIni >= 0)) {
     		xIni += xStep;
     		yIni += yStep;
     		
+    		
+    		if(yIni == 8 || yIni == -1 || xIni == 8 || xIni == -1) {
+    			return false;
+    		}
+            
     		//if there is a piece is the way this will return false
     		if(board.getPiece(yIni, xIni) != null) {
     			return false;
@@ -261,7 +384,7 @@ public class Chess {
         		+ "Rookblack Knightblack Bishopblack Queenblack Kingblack Bishopblack Knightblack Rookblack ");
 
         System.out.print("test");//False
-        System.out.println(validMove(test, 0, 0, 2, 0));
+        System.out.println(validMove(test,1, 0, 0, 2, 0));
         
 
         
@@ -275,7 +398,7 @@ public class Chess {
         		+ "null Knightblack Bishopblack Queenblack Kingblack Bishopblack Knightblack Rookblack ");
 
         System.out.println("test1");//true
-        System.out.println(validMove(test1, 0, 0, 4, 0)+"\r\n");
+        System.out.println(validMove(test1,1, 0, 0, 4, 0)+"\r\n");
         
         
         Board test2 = new Board("Rookwhite Knightwhite Bishopwhite Queenwhite Kingwhite Bishopwhite Knightwhite Rookwhite \r\n"
@@ -288,7 +411,7 @@ public class Chess {
         		+ "null Knightblack Bishopblack Queenblack Kingblack Bishopblack Knightblack Rookblack ");
 
         System.out.println("test2");//true
-        System.out.println(validMove(test2, 0, 2, 2, 0)+"\r\n");
+        System.out.println(validMove(test2,1, 0, 2, 2, 0)+"\r\n");
         
         
         
@@ -302,7 +425,7 @@ public class Chess {
         		+ "null Knightblack Bishopblack Queenblack Kingblack Bishopblack Knightblack Rookblack ");
 
         System.out.println("test3");//True
-        System.out.println(validMove(test3, 0, 2, 2, 0)+"\r\n");
+        System.out.println(validMove(test3, 1,0, 2, 2, 0)+"\r\n");
         //System.out.println(validCapture(test3,0,3,2,0 ));
         
         
@@ -316,7 +439,7 @@ public class Chess {
         		+ "null Knightblack Bishopblack Queenblack Kingblack Bishopblack Knightblack Rookblack ");
 
         System.out.println("test4");//False
-        System.out.println(validMove(test4, 0, 2, 2, 0)+"\r\n");
+        System.out.println(validMove(test4, 1,0, 2, 2, 0)+"\r\n");
         
         
         
