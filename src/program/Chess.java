@@ -26,7 +26,7 @@ public class Chess {
 	 * @param x			Destination
 	 * @return			true if the move is valid
 	 */
-	public static void validMove(Board board ,int turn , int yIni,int xIni,int y,int x ){
+	public static boolean validMove(Board board ,int turn , int yIni,int xIni,int y,int x ){
 		
 		int player = turn %  2;
 		
@@ -34,7 +34,7 @@ public class Chess {
 		
 		Piece tempStorage;
 		
-		boolean canCapture;
+		boolean canCapture = false;
 		//white turn
 		if(player == 0) {
 			if(board.getBoard()[yIni][xIni] != null) {
@@ -55,13 +55,15 @@ public class Chess {
 						
 						//if still in check that its invalid
 						if( checkPattern == 0 || checkPattern == 2) {
-							board.getBoard()[yIni][yIni] = board.getBoard()[y][x];
+							board.getBoard()[yIni][xIni] = board.getBoard()[y][x];
 							
 							board.getBoard()[y][x] = tempStorage;
+							return false;
 						}
 						else {
 							board.getBoard()[y][x].x = x*80+87;
 							board.getBoard()[y][x].y = 560-y*80+87;
+							
 						}
 						
 					}
@@ -97,9 +99,10 @@ public class Chess {
 						
 						//if still in check that its invalid
 						if( checkPattern == 1 || checkPattern == 2) {
-							board.getBoard()[yIni][yIni] = board.getBoard()[y][x];
+							board.getBoard()[yIni][xIni] = board.getBoard()[y][x];
 							
 							board.getBoard()[y][x] = tempStorage;
+							return false;
 						}
 						else {
 							board.getBoard()[y][x].x = x*80+87;
@@ -123,18 +126,31 @@ public class Chess {
 		
 		
 		
-		//check if in check
-		 
-		 //canCapture(board, turn, yIni, xIni, y, x);
-		 
-		 //check if the person who is playing is in check after playing
-		 //return to old state if it doesnt work
-		 //return canCapture(board, turn, yIni, xIni, y, x);
+		//method promote that looks for promotions		 
 	 
+		return canCapture;
 	 }
 	 
 	 
+	 public static void promote(Board board) {
+		 for(int i = 0; i < 8; i++) {
+			 if( board.getBoard()[0][i] != null) {
+				 if(board.getBoard()[0][i].getClass() == new Pawn("").getClass()) {
+					 //promote
+					 
+				 }
+			 }
+			 if( board.getBoard()[7][i] != null) {
+				 if(board.getBoard()[7][i].getClass() == new Pawn("").getClass()) {
+					 //promote
+				 }
+			 }
+			 
+					 
+			
 	 
+		 }
+	 }
 	 
     public static boolean canCapture(Board board ,int turn , int yIni,int xIni,int y,int x ){
     	
