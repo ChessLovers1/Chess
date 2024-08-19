@@ -69,14 +69,25 @@ public class Chess {
 					}
 					else if(canCapture) {
 						
+						tempStorage = board.getBoard()[y][x];
+						
 						board.getBoard()[y][x] = board.getBoard()[yIni][xIni];
 						board.getBoard()[yIni][xIni] = null;
 						
 						board.getBoard()[y][x].x = x*80+87;
 						board.getBoard()[y][x].y = 560-y*80+87;
+						
+						checkPattern = isInCheck(board);
+						
+						if( checkPattern == 0 || checkPattern == 2) {
+							board.getBoard()[yIni][xIni] = board.getBoard()[y][x];
+							
+							board.getBoard()[y][x] = tempStorage;
+							return false;
 					}
 				}
 			}
+		}
 		}
 		
 		//black turn
@@ -112,11 +123,23 @@ public class Chess {
 					}
 					else if(canCapture) {
 						
+						tempStorage = board.getBoard()[y][x];
+						
 						board.getBoard()[y][x] = board.getBoard()[yIni][xIni];
 						board.getBoard()[yIni][xIni] = null;
 						
 						board.getBoard()[y][x].x = x*80+87;
 						board.getBoard()[y][x].y = 560-y*80+87;
+						
+						checkPattern = isInCheck(board);
+						
+						if( checkPattern == 1 || checkPattern == 2) {
+							board.getBoard()[yIni][xIni] = board.getBoard()[y][x];
+							
+							board.getBoard()[y][x] = tempStorage;
+							return false;
+						
+						}
 					}
 				}
 			}
@@ -127,9 +150,10 @@ public class Chess {
 		
 		
 		//method promote that looks for promotions		 
-	 
+		
 		return canCapture;
-	 }
+		}
+	 
 	 
 	 
 	 public static void promote(Board board) {
