@@ -48,7 +48,7 @@ public class ChessBoardPanel extends JPanel {
      */
     int yDimension = 0;
     
-    
+    int step = 0;
     private Image board;
     
    
@@ -64,9 +64,16 @@ public class ChessBoardPanel extends JPanel {
     /**
      * @see Board.java
      */
-    Board Board = new Board();    
-    
-    
+    Board Board =  new Board();
+    /*new Board("Rookwhite Knightwhite Bishopwhite Queenwhite Kingwhite Bishopwhite Knightwhite Rookwhite \r\n"
+    		+ "Pawnwhite Pawnwhite Pawnwhite Pawnwhite Pawnwhite Pawnwhite Pawnwhite Pawnwhite \r\n"
+    		+ "null null null null null null null null \r\n"
+    		+ "null null null null null null null null \r\n"
+    		+ "null null null Pawnwhite null null null null \r\n"
+    		+ "null null null null null null null null \r\n"
+    		+ "Pawnblack Pawnblack Pawnblack Pawnblack Pawnblack Pawnblack Pawnblack Pawnblack \r\n"
+    		+ "Rookblack Knightblack Bishopblack Queenblack Kingblack Bishopblack Knightblack Rookblack ");
+    */
     
     public ChessBoardPanel() {
         ImageIcon obj = new ImageIcon("./src/img/z-chessBoardV1.png");
@@ -174,7 +181,12 @@ public class ChessBoardPanel extends JPanel {
             	  
             	  
 	              if(Board.getBoard()[position[0]][position[1]] != null) {
-	            	 moveImg(new int [] {position[0], position[1]}, x-30, y-30); 
+	            	  if(Board.getBoard()[position[0]][position[1]].color == "white" && step %2 == 0) {
+	 	            	 	moveImg(new int [] {position[0], position[1]}, x-30, y-30); 
+	        			}
+	        			else if(Board.getBoard()[position[0]][position[1]].color == "black" && step % 2 == 1) {
+	   	            	 	moveImg(new int [] {position[0], position[1]}, x-30, y-30); 
+	        			}
 	              }
               }
               
@@ -183,108 +195,96 @@ public class ChessBoardPanel extends JPanel {
         
         addMouseListener(new MouseAdapter() {
         	public void mouseReleased(MouseEvent me) {
-        		
-        		
-        		//X position
-	              if(x > xDimension+80*2 && x <xDimension+80*3) {
-	            	  tempPosition[1] = 1;
-	              }
-	              else if(x > xDimension+80 && x <xDimension+80*2) {
-	            	  tempPosition[1] = 0;
-	              }
-	              else if(x > xDimension+80*3 && x <xDimension+80*4) {
-	            	  tempPosition[1] = 2;
-	              }
-	              else if(x > xDimension+80*4 && x <xDimension+80*5) {
-	            	  tempPosition[1] = 3;
-	              }
-	              else if(x > xDimension+80*5 && x <xDimension+80*6) {
-	            	  tempPosition[1] = 4;
-	              }
-	              else if(x > xDimension+80*6 && x <xDimension+80*7) {
-	            	  tempPosition[1] = 5;
-	              }
-	              else if(x > xDimension+80*7 && x <xDimension+80*8) {
-	            	  tempPosition[1] = 6;
-	              }
-	              else if(x > xDimension+80*8 && x <xDimension+80*9) {
-	            	  tempPosition[1] = 7;
-	              }
-	              else {
-	            	  tempPosition[1] = -1;
-	              }
-	              
-	              //Y position
-	              if( y > yDimension+80 && y < yDimension+80*2) {
-	            	  tempPosition[0] = 7;
-	              }
-	              else if( y > yDimension+80*2 && y < yDimension+80*3) {
-	            	  tempPosition[0] = 6;
-	              }
-	              else if( y > yDimension+80*3 && y < yDimension+80*4) {
-	            	  tempPosition[0] = 5;
-	              }
-	              else if( y > yDimension+80*4 && y < yDimension+80*5) {
-	            	  tempPosition[0] = 4;
-	              }
-	              else if( y > yDimension+80*5 && y < yDimension+80*6) {
-	            	  tempPosition[0] = 3;
-	              }
-	              else if( y > yDimension+80*6 && y < yDimension+80*7) {
-	            	  tempPosition[0] = 2;
-	              }
-	              else if( y > yDimension+80*7 && y < yDimension+80*8) {
-	            	  tempPosition[0] = 1;
-	              }
-	              else if( y > yDimension+80*8 && y < yDimension+80*9) {
-	            	  tempPosition[0] = 0;
-	              }
-	              else {
-	            	  tempPosition[0] = -1;
-	              }
-
-        		
-        		
-        		
-        		//do stuff to find out if it was a valid move
-	            if( !(position[0] == -1 || position[1] == -1 || tempPosition[0] == -1 || tempPosition[1] == -1) ) {
-	            	if(Board.getBoard()[position[0]][position[1]] != null) {
-		            	if(Chess.validMove(Board,1, position[0], position[1], tempPosition[0], tempPosition[1])) {
-		        			moveImg(new int [] {position[0], position[1]}, tempPosition[1]*80+87+xDimension, 560-tempPosition[0]*80+yDimension+87);
-		        			//Board[tempPosition[0]][tempPosition[1]] = Board[position[0]][position[1]];
-		        			//List[tempPosition[0]][tempPosition[1]] = List[position[0]][position[1]];
-		        		
-		        			//The current problem is that there is two arrays one Piece[][] and one imageObject[][]        fixed
-		        			//This is unnecessary because imageObject is no longer extends jFrame and only stores simple information
-		        			
-		        			
-		        			//the picture for ever piece should be a part of their classes  fixed
-		        			
-		        			
-		        			//after this is fixed it will be easier to swap the position of the pieces and then simply repaint(); after to update the position of the pieces
-		        			Board.getBoard()[tempPosition[0]][tempPosition[1]] = Board.getBoard()[position[0]][position[1]];
-		        			Board.getBoard()[position[0]][position[1]] = null;
-		        		}
-		        		
-		        		
-		        		else if(Board.getBoard()[position[0]][position[1]] != null) {
-			        		moveImg(new int [] {position[0], position[1]}, position[1]*80+87+xDimension, 560-position[0]*80+yDimension+87);
-		        		}
-	            	}
-	            }
-	            if(!(position[0] == -1 || position[1] == -1)) {
-		            if(Board.getBoard()[position[0]][position[1]] != null) {
-			            if(Board.getBoard()[position[0]][position[1]] != null) {
-			        		moveImg( new int [] {position[0], position[1]}, position[1]*80+87+xDimension, 560-position[0]*80+yDimension+87);
-		        		}
+        		if( Board.getBoard()[position[0]][position[1]] != null &&
+        			(Board.getBoard()[position[0]][position[1]].color == "white" && step % 2 == 0 || 
+        			Board.getBoard()[position[0]][position[1]].color == "black" && step % 2== 1 ) ) {
+	        		
+	        		//X position
+		              if(x > xDimension+80*2 && x <xDimension+80*3) {
+		            	  tempPosition[1] = 1;
+		              }
+		              else if(x > xDimension+80 && x <xDimension+80*2) {
+		            	  tempPosition[1] = 0;
+		              }
+		              else if(x > xDimension+80*3 && x <xDimension+80*4) {
+		            	  tempPosition[1] = 2;
+		              }
+		              else if(x > xDimension+80*4 && x <xDimension+80*5) {
+		            	  tempPosition[1] = 3;
+		              }
+		              else if(x > xDimension+80*5 && x <xDimension+80*6) {
+		            	  tempPosition[1] = 4;
+		              }
+		              else if(x > xDimension+80*6 && x <xDimension+80*7) {
+		            	  tempPosition[1] = 5;
+		              }
+		              else if(x > xDimension+80*7 && x <xDimension+80*8) {
+		            	  tempPosition[1] = 6;
+		              }
+		              else if(x > xDimension+80*8 && x <xDimension+80*9) {
+		            	  tempPosition[1] = 7;
+		              }
+		              else {
+		            	  tempPosition[1] = -1;
+		              }
+		              
+		              //Y position
+		              if( y > yDimension+80 && y < yDimension+80*2) {
+		            	  tempPosition[0] = 7;
+		              }
+		              else if( y > yDimension+80*2 && y < yDimension+80*3) {
+		            	  tempPosition[0] = 6;
+		              }
+		              else if( y > yDimension+80*3 && y < yDimension+80*4) {
+		            	  tempPosition[0] = 5;
+		              }
+		              else if( y > yDimension+80*4 && y < yDimension+80*5) {
+		            	  tempPosition[0] = 4;
+		              }
+		              else if( y > yDimension+80*5 && y < yDimension+80*6) {
+		            	  tempPosition[0] = 3;
+		              }
+		              else if( y > yDimension+80*6 && y < yDimension+80*7) {
+		            	  tempPosition[0] = 2;
+		              }
+		              else if( y > yDimension+80*7 && y < yDimension+80*8) {
+		            	  tempPosition[0] = 1;
+		              }
+		              else if( y > yDimension+80*8 && y < yDimension+80*9) {
+		            	  tempPosition[0] = 0;
+		              }
+		              else {
+		            	  tempPosition[0] = -1;
+		              }
+	
+	        		
+	        		
+	        		
+	        		//do stuff to find out if it was a valid move
+		            if( !(position[0] == -1 || position[1] == -1 || tempPosition[0] == -1 || tempPosition[1] == -1) ) {
+		            	if(Board.getBoard()[position[0]][position[1]] != null) {
+		            		
+		            		Chess.validMove(Board, step, position[0], position[1], tempPosition[0], tempPosition[1]);
+		            		step++;
+			        		repaint();
+		            		}
+			        		
 		            }
-	            }
+		            
+		            //resets the piece to its original position
+		            if(!(position[0] == -1 || position[1] == -1)) {
+			            if(Board.getBoard()[position[0]][position[1]] != null) {
+				            if(Board.getBoard()[position[0]][position[1]] != null) {
+				        		moveImg( new int [] {position[0], position[1]}, position[1]*80+87+xDimension, 560-position[0]*80+yDimension+87);
+				        		step--;
+				            }
+			            }
+		            }
+	        		
         		
-        		
+        		}
         		position[0] = -1;
         		position[1] = -1;
-        		
-        		
         	}});
         
         

@@ -26,21 +26,110 @@ public class Chess {
 	 * @param x			Destination
 	 * @return			true if the move is valid
 	 */
-	public static boolean validMove(Board board ,int turn , int yIni,int xIni,int y,int x ){
-		 
-		 if(isInCheck(board) == 0) {
-			 System.out.println("whiteInCheck");
-		 }
-		 else if(isInCheck(board) == 1) {
-			 System.out.println("blackInCheck");
-		 }
-		 else if(isInCheck(board) == 2) {
-			 System.out.println("bothInCheck");
-		 }
-	
+	public static void validMove(Board board ,int turn , int yIni,int xIni,int y,int x ){
 		
+		int player = turn %  2;
+		
+		int checkPattern = isInCheck(board);
+		
+		Piece tempStorage;
+		
+		boolean canCapture;
+		//white turn
+		if(player == 0) {
+			if(board.getBoard()[yIni][xIni] != null) {
+				
+				if(board.getBoard()[yIni][xIni].color == "white") {
+					
+					canCapture = canCapture(board, turn, yIni, xIni, y, x);
+					
+					//if you are already in check
+					if( (checkPattern == 0 || checkPattern == 2 ) && canCapture ) {
+						
+						tempStorage = board.getBoard()[y][x];
+						
+						board.getBoard()[y][x] = board.getBoard()[yIni][xIni];
+						board.getBoard()[yIni][xIni] = null;
+						
+						checkPattern = isInCheck(board);
+						
+						//if still in check that its invalid
+						if( checkPattern == 0 || checkPattern == 2) {
+							board.getBoard()[yIni][yIni] = board.getBoard()[y][x];
+							
+							board.getBoard()[y][x] = tempStorage;
+						}
+						else {
+							board.getBoard()[y][x].x = x*80+87;
+							board.getBoard()[y][x].y = 560-y*80+87;
+						}
+						
+					}
+					else if(canCapture) {
+						
+						board.getBoard()[y][x] = board.getBoard()[yIni][xIni];
+						board.getBoard()[yIni][xIni] = null;
+						
+						board.getBoard()[y][x].x = x*80+87;
+						board.getBoard()[y][x].y = 560-y*80+87;
+					}
+				}
+			}
+		}
+		
+		//black turn
+		else {
+			if(board.getBoard()[yIni][xIni] != null) {
+				
+				if(board.getBoard()[yIni][xIni].color == "black") {
+					
+					canCapture = canCapture(board, turn, yIni, xIni, y, x);
+					
+					//if you are already in check
+					if( (checkPattern == 1 || checkPattern == 2 ) && canCapture ) {
+						
+						tempStorage = board.getBoard()[y][x];
+						
+						board.getBoard()[y][x] = board.getBoard()[yIni][xIni];
+						board.getBoard()[yIni][xIni] = null;
+						
+						checkPattern = isInCheck(board);
+						
+						//if still in check that its invalid
+						if( checkPattern == 1 || checkPattern == 2) {
+							board.getBoard()[yIni][yIni] = board.getBoard()[y][x];
+							
+							board.getBoard()[y][x] = tempStorage;
+						}
+						else {
+							board.getBoard()[y][x].x = x*80+87;
+							board.getBoard()[y][x].y = 560-y*80+87;
+						}
+						
+					}
+					else if(canCapture) {
+						
+						board.getBoard()[y][x] = board.getBoard()[yIni][xIni];
+						board.getBoard()[yIni][xIni] = null;
+						
+						board.getBoard()[y][x].x = x*80+87;
+						board.getBoard()[y][x].y = 560-y*80+87;
+					}
+				}
+			}
+		}
+		
+		
+		
+		
+		
+		//check if in check
 		 
-		 return canCapture(board, turn, yIni, xIni, y, x);
+		 //canCapture(board, turn, yIni, xIni, y, x);
+		 
+		 //check if the person who is playing is in check after playing
+		 //return to old state if it doesnt work
+		 //return canCapture(board, turn, yIni, xIni, y, x);
 	 
 	 }
 	 
