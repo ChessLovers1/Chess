@@ -4,7 +4,7 @@ import java.awt.Image;
 import program.*;
 public class Piece{
 	public int x,y;
-    String color;
+    public String color;
     public Image Img;
     public Piece(){
      
