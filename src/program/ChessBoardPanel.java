@@ -57,7 +57,7 @@ public class ChessBoardPanel extends JPanel {
      */
     int[] prioIndex = new int[] {-1};
 
-  
+    
     
 
     
@@ -264,8 +264,15 @@ public class ChessBoardPanel extends JPanel {
 		            if( !(position[0] == -1 || position[1] == -1 || tempPosition[0] == -1 || tempPosition[1] == -1) ) {
 		            	if(Board.getBoard()[position[0]][position[1]] != null) {
 		            		
-		            		Chess.validMove(Board, step, position[0], position[1], tempPosition[0], tempPosition[1]);
-		            		step++;
+		            		step++;	
+		            		if(Chess.validMove(Board, step, position[0], position[1], tempPosition[0], tempPosition[1])) {
+		            			
+		            		}
+		            		else {
+		            			moveImg( new int [] {position[0], position[1]}, position[1]*80+87+xDimension, 560-position[0]*80+yDimension+87);
+		            			
+		            		}
+		            		
 			        		repaint();
 		            		}
 			        		
