@@ -2,8 +2,7 @@ package program;
 
 import pieces.*;
 
-
-
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.MouseAdapter;
@@ -51,7 +50,12 @@ public class ChessBoardPanel extends JPanel {
     int step = 0;
     private Image board;
     
-   
+    
+    /**
+     * by default the value is -1
+     * if it changes from -1 that means that a pawn is to be promoted on that index
+     */
+    int[] promote = new int[] {-1,-1};
     /**
      * this variable is so that the image that is moving shows up on top of every other image
      */
@@ -64,7 +68,14 @@ public class ChessBoardPanel extends JPanel {
     /**
      * @see Board.java
      */
-    Board Board =  new Board();
+    Board Board =  new Board("Rookwhite Knightwhite Bishopwhite Queenwhite Kingwhite Bishopwhite Knightwhite Rookwhite \r\n"
+    		+ "Pawnwhite Pawnwhite Pawnwhite Pawnwhite Pawnwhite Pawnwhite Pawnwhite Pawnblack \r\n"
+    		+ "null null null null null null null null \r\n"
+    		+ "null null null null null null null null \r\n"
+    		+ "null null null Pawnwhite null null null null \r\n"
+    		+ "null null null null null null null null \r\n"
+    		+ "Pawnwhite Pawnblack Pawnblack Pawnblack Pawnblack Pawnblack Pawnblack Pawnblack \r\n"
+    		+ "Rookblack Knightblack Bishopblack Queenblack Kingblack Bishopblack Knightblack Rookblack ");
     /*new Board("Rookwhite Knightwhite Bishopwhite Queenwhite Kingwhite Bishopwhite Knightwhite Rookwhite \r\n"
     		+ "Pawnwhite Pawnwhite Pawnwhite Pawnwhite Pawnwhite Pawnwhite Pawnwhite Pawnwhite \r\n"
     		+ "null null null null null null null null \r\n"
@@ -107,95 +118,97 @@ public class ChessBoardPanel extends JPanel {
         
         addMouseMotionListener(new MouseAdapter() { 
             public void mouseDragged(MouseEvent me) {
-         
-              x = me.getX();
-              y = me.getY();
-              //System.out.println("x : "+x+" y : "+y);
-              //System.out.println("xDimension "+ xDimension+ " yDimension " + yDimension );
-              
-              
-              if(position[0] == -1) {
-	              //X position
-	              if(x > xDimension+80*2 && x <xDimension+80*3) {
-	            	  position[1] = 1;
-	              }
-	              else if(x > xDimension+80 && x <xDimension+80*2) {
-	            	  position[1] = 0;
-	              }
-	              else if(x > xDimension+80*3 && x <xDimension+80*4) {
-	            	  position[1] = 2;
-	              }
-	              else if(x > xDimension+80*4 && x <xDimension+80*5) {
-	            	  position[1] = 3;
-	              }
-	              else if(x > xDimension+80*5 && x <xDimension+80*6) {
-	            	  position[1] = 4;
-	              }
-	              else if(x > xDimension+80*6 && x <xDimension+80*7) {
-	            	  position[1] = 5;
-	              }
-	              else if(x > xDimension+80*7 && x <xDimension+80*8) {
-	            	  position[1] = 6;
-	              }
-	              else if(x > xDimension+80*8 && x <xDimension+80*9) {
-	            	  position[1] = 7;
-	              }
-	              else {
-	            	  position[1]=-1;
+              if( promote[0] == -1 ) {
+	              x = me.getX();
+	              y = me.getY();
+	              //System.out.println("x : "+x+" y : "+y);
+	              //System.out.println("xDimension "+ xDimension+ " yDimension " + yDimension );
+	              
+	              
+	              if(position[0] == -1) {
+		              //X position
+		              if(x > xDimension+80*2 && x <xDimension+80*3) {
+		            	  position[1] = 1;
+		              }
+		              else if(x > xDimension+80 && x <xDimension+80*2) {
+		            	  position[1] = 0;
+		              }
+		              else if(x > xDimension+80*3 && x <xDimension+80*4) {
+		            	  position[1] = 2;
+		              }
+		              else if(x > xDimension+80*4 && x <xDimension+80*5) {
+		            	  position[1] = 3;
+		              }
+		              else if(x > xDimension+80*5 && x <xDimension+80*6) {
+		            	  position[1] = 4;
+		              }
+		              else if(x > xDimension+80*6 && x <xDimension+80*7) {
+		            	  position[1] = 5;
+		              }
+		              else if(x > xDimension+80*7 && x <xDimension+80*8) {
+		            	  position[1] = 6;
+		              }
+		              else if(x > xDimension+80*8 && x <xDimension+80*9) {
+		            	  position[1] = 7;
+		              }
+		              else {
+		            	  position[1]=-1;
+		              }
+		              
+		              //Y position
+		              if( y > yDimension+80 && y < yDimension+80*2) {
+		            		  position[0] = 7;
+		              }
+		              else if( y > yDimension+80*2 && y < yDimension+80*3) {
+		        		  position[0] = 6;
+		              }
+		              else if( y > yDimension+80*3 && y < yDimension+80*4) {
+		        		  position[0] = 5;
+		              }
+		              else if( y > yDimension+80*4 && y < yDimension+80*5) {
+		        		  position[0] = 4;
+		              }
+		              else if( y > yDimension+80*5 && y < yDimension+80*6) {
+		        		  position[0] = 3;
+		              }
+		              else if( y > yDimension+80*6 && y < yDimension+80*7) {
+		        		  position[0] = 2;
+		              }
+		              else if( y > yDimension+80*7 && y < yDimension+80*8) {
+		        		  position[0] = 1;
+		              }
+		              else if( y > yDimension+80*8 && y < yDimension+80*9) {
+		        		  position[0] = 0;
+		              }
+		              else {
+		            	  position[0]=-1;
+		              }
+	             
 	              }
 	              
-	              //Y position
-	              if( y > yDimension+80 && y < yDimension+80*2) {
-	            		  position[0] = 7;
+	              
+	              
+	              if(!(position[0] == -1 || position[1] == -1)) {
+	            	  
+	            	  
+		              if(Board.getBoard()[position[0]][position[1]] != null) {
+		            	  if(Board.getBoard()[position[0]][position[1]].color == "white" && step %2 == 0) {
+		 	            	 	moveImg(new int [] {position[0], position[1]}, x-30, y-30); 
+		        			}
+		        			else if(Board.getBoard()[position[0]][position[1]].color == "black" && step % 2 == 1) {
+		   	            	 	moveImg(new int [] {position[0], position[1]}, x-30, y-30); 
+		        			}
+		              }
 	              }
-	              else if( y > yDimension+80*2 && y < yDimension+80*3) {
-	        		  position[0] = 6;
-	              }
-	              else if( y > yDimension+80*3 && y < yDimension+80*4) {
-	        		  position[0] = 5;
-	              }
-	              else if( y > yDimension+80*4 && y < yDimension+80*5) {
-	        		  position[0] = 4;
-	              }
-	              else if( y > yDimension+80*5 && y < yDimension+80*6) {
-	        		  position[0] = 3;
-	              }
-	              else if( y > yDimension+80*6 && y < yDimension+80*7) {
-	        		  position[0] = 2;
-	              }
-	              else if( y > yDimension+80*7 && y < yDimension+80*8) {
-	        		  position[0] = 1;
-	              }
-	              else if( y > yDimension+80*8 && y < yDimension+80*9) {
-	        		  position[0] = 0;
-	              }
-	              else {
-	            	  position[0]=-1;
-	              }
-             
-              }
-              
-              
-              
-              if(!(position[0] == -1 || position[1] == -1)) {
-            	  
-            	  
-	              if(Board.getBoard()[position[0]][position[1]] != null) {
-	            	  if(Board.getBoard()[position[0]][position[1]].color == "white" && step %2 == 0) {
-	 	            	 	moveImg(new int [] {position[0], position[1]}, x-30, y-30); 
-	        			}
-	        			else if(Board.getBoard()[position[0]][position[1]].color == "black" && step % 2 == 1) {
-	   	            	 	moveImg(new int [] {position[0], position[1]}, x-30, y-30); 
-	        			}
-	              }
-              }
-              
+              }  
               }});  
         
         
         addMouseListener(new MouseAdapter() {
         	public void mouseReleased(MouseEvent me) {
-        		if( Board.getBoard()[position[0]][position[1]] != null &&
+        		
+        		if(promote[0] == -1 && position[0] >= 0 && position[0] <= 7 && position[1] >= 0 && position[1] <= 7 &&
+        				Board.getBoard()[position[0]][position[1]] != null &&
         			(Board.getBoard()[position[0]][position[1]].color == "white" && step % 2 == 0 || 
         			Board.getBoard()[position[0]][position[1]].color == "black" && step % 2== 1 ) ) {
 	        		
@@ -265,6 +278,13 @@ public class ChessBoardPanel extends JPanel {
 		            	if(Board.getBoard()[position[0]][position[1]] != null) {
 		            		
 		            		if(Chess.validMove(Board, step, position[0], position[1], tempPosition[0], tempPosition[1])) {
+		            				promote = Chess.promote(Board);
+		            					repaint();
+		            					
+		            					
+		            						
+		            						
+		            					
 		            				
 		            		}
 		            		else {
@@ -295,8 +315,87 @@ public class ChessBoardPanel extends JPanel {
         	}});
         
         
-        
-        
+        //This Mouse Listener is only for the case where we need to promote a pawn
+        addMouseListener(new MouseAdapter() {
+			public void mousePressed(MouseEvent me) {
+				if(promote[0] != -1) {
+					x = me.getX();
+		            y = me.getY();
+		            
+		            if(y > yDimension + 80*4 && y < yDimension+ 80*5 && x > xDimension + 80*4 && x < xDimension + 80*5 ) {
+		            	System.out.println("Rook "+promote[0]);
+		            	if(promote[0] == 7) {
+		            		Board.getBoard()[promote[0]][promote[1]] = new Rook("white");
+		            		Board.getBoard()[promote[0]][promote[1]].x = promote[1]*80+87;
+		            		Board.getBoard()[promote[0]][promote[1]].y = 560 - promote[0]*80+87;
+		            		repaint();
+		            		promote[0] = -1;
+		            	}
+		            	else {
+		            		Board.getBoard()[promote[0]][promote[1]] = new Rook("black");
+		            		
+		            		Board.getBoard()[promote[0]][promote[1]].x = promote[1]*80+87;
+		            		Board.getBoard()[promote[0]][promote[1]].y = 560 - promote[0]*80+87;
+		            		repaint();
+		            		promote[0] = -1;
+		            	}
+		            }
+		            else if(y > yDimension + 80*4 && y < yDimension+ 80*5 && x > xDimension + 80*5 && x < xDimension + 80*6 ) {
+		            	
+		            	if(promote[0] == 7) {
+		            		Board.getBoard()[promote[0]][promote[1]] = new Queen("white");
+		            		Board.getBoard()[promote[0]][promote[1]].x = promote[1]*80+87;
+		            		Board.getBoard()[promote[0]][promote[1]].y = 560 - promote[0]*80+87;
+		            		repaint();
+		            		promote[0] = -1;
+		            	}
+		            	else {
+		            		Board.getBoard()[promote[0]][promote[1]] = new Queen("black");
+		            		Board.getBoard()[promote[0]][promote[1]].x = promote[1]*80+87;
+		            		Board.getBoard()[promote[0]][promote[1]].y = 560 - promote[0]*80+87;
+		            		repaint();
+		            		promote[0] = -1;
+		            	}
+		            }
+		            else if(y > yDimension + 80*5 && y < yDimension+ 80*6 && x > xDimension + 80*4 && x < xDimension + 80*5 ) {
+		            	
+		            	if(promote[0] == 7) {
+		            		Board.getBoard()[promote[0]][promote[1]] = new Bishop("white");
+		            		Board.getBoard()[promote[0]][promote[1]].x = promote[1]*80+87;
+		            		Board.getBoard()[promote[0]][promote[1]].y = 560 - promote[0]*80+87;
+		            		repaint();
+		            		promote[0] = -1;
+		            	}
+		            	else {
+		            		Board.getBoard()[promote[0]][promote[1]] = new Bishop("black");
+		            		Board.getBoard()[promote[0]][promote[1]].x = promote[1]*80+87;
+		            		Board.getBoard()[promote[0]][promote[1]].y = 560 - promote[0]*80+87;
+		            		repaint();
+		            		promote[0] = -1;
+		            	}
+		            }
+		            else if(y > yDimension + 80*5 && y < yDimension+ 80*6 && x > xDimension + 80*5 && x < xDimension + 80*6 ) {
+		            	
+		            	if(promote[0] == 7) {
+		            		Board.getBoard()[promote[0]][promote[1]] = new Knight("white");
+		            		Board.getBoard()[promote[0]][promote[1]].x = promote[1]*80+87;
+		            		Board.getBoard()[promote[0]][promote[1]].y = 560 - promote[0]*80+87;
+		            		repaint();
+		            		promote[0] = -1;
+		            	}
+		            	else {
+		            		Board.getBoard()[promote[0]][promote[1]] = new Knight("black");
+		            		Board.getBoard()[promote[0]][promote[1]].x = promote[1]*80+87;
+		            		Board.getBoard()[promote[0]][promote[1]].y = 560 - promote[0]*80+87;
+		            		repaint();
+		            		promote[0] = -1;
+		            	}
+		            }
+		            
+		            
+				}
+			}
+		});
         
         
        
@@ -367,6 +466,25 @@ public class ChessBoardPanel extends JPanel {
         	
         }  
         
+        
+        if(promote[0] == 0) {
+        	Color myColor = new Color(255, 255, 255, 180);
+        	g.setColor(myColor);
+        	g.fillRect(xDimension+80*4, yDimension+80*4, 160, 160);
+        	g.drawImage(new Rook("black").Img, xDimension+80*3+87,yDimension+80*3+87 , 65, 65, null);
+        	g.drawImage(new Queen("black").Img, xDimension+80*4+87,yDimension+80*3+87 , 65, 65, null);
+        	g.drawImage(new Bishop("black").Img, xDimension+80*3+87,yDimension+80*4+87 , 65, 65, null);
+        	g.drawImage(new Knight("black").Img, xDimension+80*4+87,yDimension+80*4+87 , 65, 65, null);
+        }
+        else if(promote[0] == 7) {
+        	Color myColor = new Color(255, 255, 255, 180);
+        	g.setColor(myColor);
+        	g.fillRect(xDimension+80*4, yDimension+80*4, 160, 160);
+        	g.drawImage(new Rook("white").Img, xDimension+80*3+87,yDimension+80*3+87 , 65, 65, null);
+        	g.drawImage(new Queen("white").Img, xDimension+80*4+87,yDimension+80*3+87 , 65, 65, null);
+        	g.drawImage(new Bishop("white").Img, xDimension+80*3+87,yDimension+80*4+87 , 65, 65, null);
+        	g.drawImage(new Knight("white").Img, xDimension+80*4+87,yDimension+80*4+87 , 65, 65, null);
+        }
     }
     
 }
