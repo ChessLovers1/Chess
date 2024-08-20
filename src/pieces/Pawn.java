@@ -4,7 +4,7 @@ import javax.swing.ImageIcon;
 
 public class Pawn extends Piece{
     
-	public int jump;//the number will be at what turn did it jump 
+	public int jump = -1;//the number will be at what turn did it jump 
     public Pawn(String color){
     	super(color);
     	if(color != null) {
