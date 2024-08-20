@@ -156,17 +156,22 @@ public class Chess {
 	 
 	 
 	 
-	 public static void promote(Board board) {
+	 public static int[] promote(Board board) {
+		 int[] index = new int[] {-1,-1};
 		 for(int i = 0; i < 8; i++) {
 			 if( board.getBoard()[0][i] != null) {
 				 if(board.getBoard()[0][i].getClass() == new Pawn("").getClass()) {
-					 //promote
+					 index[0] = 0;
+					 index[1] = i;
+					 return index;
 					 
 				 }
 			 }
 			 if( board.getBoard()[7][i] != null) {
 				 if(board.getBoard()[7][i].getClass() == new Pawn("").getClass()) {
-					 //promote
+					 index[0] = 7;
+					 index[1] = i;
+					 return index;
 				 }
 			 }
 			 
@@ -174,6 +179,7 @@ public class Chess {
 			
 	 
 		 }
+		 return index;
 	 }
 	 
     public static boolean canCapture(Board board ,int turn , int yIni,int xIni,int y,int x ){
@@ -420,16 +426,40 @@ public class Chess {
         
         //black
         if(board.getBoard()[yIni][xIni].getColor() == "black") {
-        	
+        	if(yIni == 3 && xIni - x == -1 && board.getBoard()[y][x] == null) {//enPassant left
+        		if(turn - ( (Pawn)board.getBoard()[yIni][1+xIni]).jump < 2) {
+        			result = true;
+        			board.getBoard()[yIni][1+xIni] = null;
+        		}
+        	}
+        	else if(yIni == 3 && xIni - x == 1 && board.getBoard()[y][x] == null) {//enPassant left
+        		if(turn - ( (Pawn)board.getBoard()[yIni][-1+xIni]).jump < 2) {
+        			result = true;
+        			board.getBoard()[yIni][-1+xIni] = null;
+        		}
+        	}
         	//move 1
-        	if(yIni-y == 1 && xIni - x == 0) {
-        		result = isNotObstructed(board,yIni,xIni,y,x,-1,0);
+        	else if(yIni-y == 1 && xIni - x == 0) {//fixx
+        		if(board.getBoard()[yIni-1][xIni] != null) {
+        			result = false;
+        		}
+        		else {
+        			result = true;
+        		}
+        		
         		System.out.print("move1");
         	}
         	//move 2
-        	else if(yIni - y == 2 && xIni - x == 0 && yIni == 6) {
-        		result = isNotObstructed(board,yIni,xIni,y,x,-1,0);
-        		System.out.print("move2");
+        	else if(yIni - y == 2 && xIni - x == 0 && yIni == 6) {//fix
+        		
+        		if(board.getBoard()[yIni-1][xIni] != null || board.getBoard()[yIni-2][xIni] != null) {
+        			result = false;
+        		}
+        		else {
+        			result = true;
+        		}
+        		
+        		System.out.println("jump2");
         		((Pawn)board.getBoard()[yIni][xIni]).jump  = turn;
         	}
         	//capture left
@@ -450,16 +480,40 @@ public class Chess {
         
         //white
         else if(board.getBoard()[yIni][xIni].getColor() == "white") {
-        	
+        	if(yIni == 4 && xIni - x == -1 && board.getBoard()[y][x] == null) {//enPassant left
+        		if(turn - ( (Pawn)board.getBoard()[yIni][1+xIni]).jump < 2) {
+        			result = true;
+        			board.getBoard()[yIni][1+xIni] = null;
+        		}
+        	}
+        	else if(yIni == 4 && xIni - x == 1 && board.getBoard()[y][x] == null) {//enPassant left
+        		if(turn - ( (Pawn)board.getBoard()[yIni][-1+xIni]).jump < 2) {
+        			result = true;
+        			board.getBoard()[yIni][-1+xIni] = null;
+        		}
+        	}
         	//move 1
-        	if(yIni-y == -1 && xIni - x == 0) {
-        		result = isNotObstructed(board,yIni,xIni,y,x,1,0);
-        		System.out.print("move1");
+        	else if(yIni-y == -1 && xIni - x == 0) {
+        		
+            		if(board.getBoard()[yIni+1][xIni] != null) {
+            			result = false;
+            		}
+            		else {
+            			result = true;
+            		}
+            		
+            		System.out.print("move1");
         	}
         	//move 2
         	else if(yIni - y == -2 && xIni - x == 0 && yIni == 1) {
-        		result = isNotObstructed(board,yIni,xIni,y,x,1,0);
-        		System.out.print("move2");
+        		if(board.getBoard()[yIni+1][xIni] != null || board.getBoard()[yIni+2][xIni] != null) {
+        			result = false;
+        		}
+        		else {
+        			result = true;
+        		}
+        		
+        		System.out.println("jump2");
         		((Pawn)board.getBoard()[yIni][xIni]).jump  = turn;
         	}
         	//capture left
