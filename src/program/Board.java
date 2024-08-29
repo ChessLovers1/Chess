@@ -180,21 +180,24 @@ Rook Knight Bishop Queen King Bishop Knight Rook
         return index;
 
     }
-    public void printBoard(){
-
+    public String printBoard(){
+    	String result = "";
         for(int j = 0; j<8;j++){
-            System.out.println();
+            result += "\r\n";
             for(int i = 0; i < 8;i++){
             	
             	if(this.getPiece(j, i) != null){ 
-            		System.out.print(this.getPiece(j, i)+this.getPiece(j, i).getColor()+" ");
+            		result += this.getPiece(j, i)+this.getPiece(j, i).getColor()+" ";
+            		
             	}
             	else {
-            		System.out.print(this.getPiece(j, i)+" ");
+            		result += this.getPiece(j, i)+" ";
+            		
             	 }
             	
             }
         }
+        return result;
     }
 
     public static String convertToCoord(int[] index){
