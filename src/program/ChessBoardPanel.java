@@ -30,6 +30,9 @@ public class ChessBoardPanel extends JPanel {
     /**
      * tempPosition records the index where the cursor button was released
      */
+    
+    int checkmate = -1;
+    
     int[] tempPosition = new int[2];
     
     /**
@@ -68,14 +71,26 @@ public class ChessBoardPanel extends JPanel {
     /**
      * @see Board.java
      */
-    Board Board =  new Board("Rookwhite Knightwhite Bishopwhite Queenwhite Kingwhite Bishopwhite Knightwhite Rookwhite \r\n"
-    		+ "Pawnwhite Pawnwhite Pawnwhite Pawnwhite Pawnwhite Pawnwhite Pawnwhite Pawnblack \r\n"
+    Board Board =  new Board("null Kingwhite null null null null null null \r\n"
+    		+ "null null null null null null null Queenblack \r\n"
+    		+ "null Kingblack null null null null null null \r\n"
     		+ "null null null null null null null null \r\n"
     		+ "null null null null null null null null \r\n"
-    		+ "null null null Pawnwhite null null null null \r\n"
     		+ "null null null null null null null null \r\n"
-    		+ "Pawnwhite Pawnblack Pawnblack Pawnblack Pawnblack Pawnblack Pawnblack Pawnblack \r\n"
-    		+ "Rookblack Knightblack Bishopblack Queenblack Kingblack Bishopblack Knightblack Rookblack ");
+    		+ "null null null null null null Pawnwhite null \r\n"
+    		+ "null null null null null null null null \r\n");
+
+    		
+    /*
+     new Board( "null Kingwhite null null null null null null \r\n"
+    		+ "Pawnwhite null null null null null null null \r\n"
+    		+ "Pawnblack null null null null null null null \r\n"
+    		+ "null null Queenblack null null null null null \r\n"
+    		+ "null null null null null null null null \r\n"
+    		+ "null null null null null null null null \r\n"
+    		+ "null null null null null null null null \r\n"
+    		+ "null null null null null null null Kingblack \r\n");
+     */
     /*new Board("Rookwhite Knightwhite Bishopwhite Queenwhite Kingwhite Bishopwhite Knightwhite Rookwhite \r\n"
     		+ "Pawnwhite Pawnwhite Pawnwhite Pawnwhite Pawnwhite Pawnwhite Pawnwhite Pawnwhite \r\n"
     		+ "null null null null null null null null \r\n"
@@ -118,7 +133,7 @@ public class ChessBoardPanel extends JPanel {
         
         addMouseMotionListener(new MouseAdapter() { 
             public void mouseDragged(MouseEvent me) {
-              if( promote[0] == -1 ) {
+              if( promote[0] == -1 && checkmate == -1) {
 	              x = me.getX();
 	              y = me.getY();
 	              //System.out.println("x : "+x+" y : "+y);
@@ -207,7 +222,8 @@ public class ChessBoardPanel extends JPanel {
         addMouseListener(new MouseAdapter() {
         	public void mouseReleased(MouseEvent me) {
         		
-        		if(promote[0] == -1 && position[0] >= 0 && position[0] <= 7 && position[1] >= 0 && position[1] <= 7 &&
+        		if(promote[0] == -1 && checkmate == -1 &&
+        			position[0] >= 0 && position[0] <= 7 && position[1] >= 0 && position[1] <= 7 &&
         				Board.getBoard()[position[0]][position[1]] != null &&
         			(Board.getBoard()[position[0]][position[1]].color == "white" && step % 2 == 0 || 
         			Board.getBoard()[position[0]][position[1]].color == "black" && step % 2== 1 ) ) {
@@ -270,7 +286,7 @@ public class ChessBoardPanel extends JPanel {
 		            	  tempPosition[0] = -1;
 		              }
 	
-	        		
+		             
 	        		
 	        		
 	        		//do stuff to find out if it was a valid move
@@ -279,18 +295,10 @@ public class ChessBoardPanel extends JPanel {
 		            		
 		            		if(Chess.validMove(Board, step, position[0], position[1], tempPosition[0], tempPosition[1])) {
 		            				promote = Chess.promote(Board);
-		            					repaint();
-		            					
-		            					
-		            						
-		            						
-		            					
+		            					repaint();			
 		            				
 		            		}
-		            		else {
-		            			moveImg( new int [] {position[0], position[1]}, position[1]*80+87+xDimension, 560-position[0]*80+yDimension+87);
-		            			
-		            		}
+		            		
 		            		step++;
 		            		
 			        		repaint();
@@ -298,18 +306,32 @@ public class ChessBoardPanel extends JPanel {
 			        		
 		            }
 		            
+		            
 		            //resets the piece to its original position
 		            if(!(position[0] == -1 || position[1] == -1)) {
 			            if(Board.getBoard()[position[0]][position[1]] != null) {
 				            if(Board.getBoard()[position[0]][position[1]] != null) {
 				        		moveImg( new int [] {position[0], position[1]}, position[1]*80+87+xDimension, 560-position[0]*80+yDimension+87);
 				        		step--;
+				        		repaint();
 				            }
 			            }
 		            }
 	        		
         		
         		}
+        		
+        		//check whether there is checkmate
+        		checkmate = Chess.checkmate(Board);
+        		
+        		//check for stalemate
+        		if(Chess.stalemate(Board, step)) {
+        			System.out.println("stalemate");
+        			checkmate = 2;
+        			
+        		}
+        		
+        		repaint();
         		position[0] = -1;
         		position[1] = -1;
         	}});
@@ -468,7 +490,7 @@ public class ChessBoardPanel extends JPanel {
         
         
         if(promote[0] == 0) {
-        	Color myColor = new Color(255, 255, 255, 180);
+        	Color myColor = new Color(255, 255, 255, 140);
         	g.setColor(myColor);
         	g.fillRect(xDimension+80*4, yDimension+80*4, 160, 160);
         	g.drawImage(new Rook("black").Img, xDimension+80*3+87,yDimension+80*3+87 , 65, 65, null);
@@ -477,13 +499,43 @@ public class ChessBoardPanel extends JPanel {
         	g.drawImage(new Knight("black").Img, xDimension+80*4+87,yDimension+80*4+87 , 65, 65, null);
         }
         else if(promote[0] == 7) {
-        	Color myColor = new Color(255, 255, 255, 180);
+        	Color myColor = new Color(255, 255, 255, 140);
         	g.setColor(myColor);
         	g.fillRect(xDimension+80*4, yDimension+80*4, 160, 160);
         	g.drawImage(new Rook("white").Img, xDimension+80*3+87,yDimension+80*3+87 , 65, 65, null);
         	g.drawImage(new Queen("white").Img, xDimension+80*4+87,yDimension+80*3+87 , 65, 65, null);
         	g.drawImage(new Bishop("white").Img, xDimension+80*3+87,yDimension+80*4+87 , 65, 65, null);
         	g.drawImage(new Knight("white").Img, xDimension+80*4+87,yDimension+80*4+87 , 65, 65, null);
+        	
+        }
+        
+        //white got checckmated
+        if(checkmate == 0) {
+        	
+        	Color myColor = new Color(255, 255, 255, 140);
+        	g.setColor(myColor);
+        	g.fillRect(xDimension+80*4, yDimension+80*4, 160, 160);
+        	
+        	g.drawImage(new ImageIcon("./src/img/White checkmate.png").getImage(), xDimension+80*4, yDimension+80*5 , 201, 34, null );
+        	
+        	
+        }
+        else if(checkmate == 1) {
+        	Color myColor = new Color(255, 255, 255, 140);
+        	g.setColor(myColor);
+        	g.fillRect(xDimension+80*4, yDimension+80*4, 160, 160);
+        	
+        	g.drawImage(new ImageIcon("./src/img/Black checkmate.png").getImage(), xDimension+80*4, yDimension+80*5 , 201, 34, null );
+        	
+        	
+        }
+        //stalemate
+        else if(checkmate == 2) {
+        	Color myColor = new Color(255, 255, 255, 140);
+        	g.setColor(myColor);
+        	g.fillRect(xDimension+80*4, yDimension+80*4, 160, 160);
+        	
+        	g.drawImage(new ImageIcon("./src/img/Stalemate.png").getImage(), xDimension+80*4, yDimension+80*5 , 114, 34, null );
         }
     }
     
