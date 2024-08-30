@@ -1,7 +1,9 @@
 package pieces;
 
 import java.awt.Image;
-import program.*;
+
+
+
 public class Piece{
 	public int x,y;
     public String color;
@@ -24,6 +26,9 @@ public class Piece{
     public Image getImg(){
         return Img;
     }
+    
+   
 
+    
     
 }

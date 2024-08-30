@@ -1,16 +1,7 @@
 package program;
 
-import java.awt.*; 
-import java.awt.event.*; 
 import javax.swing.*; 
-import java.awt.*; 
-import java.awt.event.*; 
-import javax.swing.*; 
-import java.awt.Canvas;
-import java.awt.Toolkit;
-import java.awt.Color;
-import java.util.Timer;
-import java.util.Date;
+
 public class GUI extends JFrame {
 
    

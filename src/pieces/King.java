@@ -8,12 +8,14 @@ public class King extends Piece{
     	super(color);
     	if(color != null) {
     		if(color.equals("white")){
+	    		this.Img = new ImageIcon(this.getClass().getResource("/img/z-White-king-chess.png")).getImage();
 	    		
-	    		this.Img = new ImageIcon("./src/img/z-White-king-chess.png").getImage();
 	    	}
 	    	else {
-	    		Img = new ImageIcon("./src/img/z-Black-king-chess.png").getImage();
+	    		
+	    		this.Img = new ImageIcon(this.getClass().getResource("/img/z-Black-king-chess.png")).getImage();
 	    	}
+    		
 	    	
     	}
 

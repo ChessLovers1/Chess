@@ -1,16 +1,11 @@
 package program;
 
 import pieces.*;
-
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
     
@@ -71,14 +66,7 @@ public class ChessBoardPanel extends JPanel {
     /**
      * @see Board.java
      */
-    Board Board =  new Board("null Kingwhite null null null null null null \r\n"
-    		+ "null null null null null null null Queenblack \r\n"
-    		+ "null Kingblack null null null null null null \r\n"
-    		+ "null null null null null null null null \r\n"
-    		+ "null null null null null null null null \r\n"
-    		+ "null null null null null null null null \r\n"
-    		+ "null null null null null null Pawnwhite null \r\n"
-    		+ "null null null null null null null null \r\n");
+    Board Board =  new Board();
 
     		
     /*
@@ -102,7 +90,8 @@ public class ChessBoardPanel extends JPanel {
     */
     
     public ChessBoardPanel() {
-        ImageIcon obj = new ImageIcon("./src/img/z-chessBoardV1.png");
+        ImageIcon obj = new ImageIcon(getClass().getResource("/img/z-chessBoardV1.png"));
+        
         board = obj.getImage();
         
         
@@ -454,6 +443,8 @@ public class ChessBoardPanel extends JPanel {
     protected void paintComponent(Graphics g) {//find out what counts as a graphic
         super.paintComponent(g);
         
+        
+        
         //xDimension and yDimension are here so it gets updated every time the window changes dimensions
         xDimension = (getWidth() - board.getWidth(this)) / 2;
         yDimension = (getHeight() - board.getHeight(this)) / 2;
@@ -516,7 +507,7 @@ public class ChessBoardPanel extends JPanel {
         	g.setColor(myColor);
         	g.fillRect(xDimension+80*4, yDimension+80*4, 160, 160);
         	
-        	g.drawImage(new ImageIcon("./src/img/White checkmate.png").getImage(), xDimension+80*4, yDimension+80*5 , 201, 34, null );
+        	g.drawImage(new ImageIcon(this.getClass().getResource("/img/White checkmate.png")).getImage(), xDimension+80*4, yDimension+80*5 , 201, 34, null );
         	
         	
         }
@@ -525,7 +516,7 @@ public class ChessBoardPanel extends JPanel {
         	g.setColor(myColor);
         	g.fillRect(xDimension+80*4, yDimension+80*4, 160, 160);
         	
-        	g.drawImage(new ImageIcon("./src/img/Black checkmate.png").getImage(), xDimension+80*4, yDimension+80*5 , 201, 34, null );
+        	g.drawImage(new ImageIcon(this.getClass().getResource("/img/Black checkmate.png")).getImage(), xDimension+80*4, yDimension+80*5 , 201, 34, null );
         	
         	
         }
@@ -535,8 +526,10 @@ public class ChessBoardPanel extends JPanel {
         	g.setColor(myColor);
         	g.fillRect(xDimension+80*4, yDimension+80*4, 160, 160);
         	
-        	g.drawImage(new ImageIcon("./src/img/Stalemate.png").getImage(), xDimension+80*4, yDimension+80*5 , 114, 34, null );
+        	g.drawImage(new ImageIcon(this.getClass().getResource("/img/Stalemate.png")).getImage(), xDimension+80*4, yDimension+80*5 , 114, 34, null );
         }
+        
+        
     }
     
 }

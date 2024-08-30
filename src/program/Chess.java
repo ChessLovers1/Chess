@@ -2,15 +2,6 @@ package program;
 
 import java.util.ArrayList;
 import pieces.Knight;
-import javax.swing.JFrame;
-import java.awt.Image;
-import javax.swing.ImageIcon;
-
-
-import java.io.BufferedInputStream;////////////////////
-
-
-
 import pieces.*;
 
 public class Chess {
