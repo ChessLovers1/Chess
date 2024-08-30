@@ -1,6 +1,6 @@
 The classic game of chess
 
 
-(download chessEXE.jar to program)
+(download chessEXE.jar for program)
 
 ![image](program.png)
