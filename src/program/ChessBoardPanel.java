@@ -507,7 +507,7 @@ public class ChessBoardPanel extends JPanel {
         	g.setColor(myColor);
         	g.fillRect(xDimension+80*4, yDimension+80*4, 160, 160);
         	
-        	g.drawImage(new ImageIcon(this.getClass().getResource("/img/White checkmate.png")).getImage(), xDimension+80*4, yDimension+80*5 , 201, 34, null );
+        	g.drawImage(new ImageIcon(this.getClass().getResource("/img/Black win.png")).getImage(), xDimension+80*4+15, yDimension+80*4+50 , 124, 34, null );
         	
         	
         }
@@ -516,7 +516,7 @@ public class ChessBoardPanel extends JPanel {
         	g.setColor(myColor);
         	g.fillRect(xDimension+80*4, yDimension+80*4, 160, 160);
         	
-        	g.drawImage(new ImageIcon(this.getClass().getResource("/img/Black checkmate.png")).getImage(), xDimension+80*4, yDimension+80*5 , 201, 34, null );
+        	g.drawImage(new ImageIcon(this.getClass().getResource("/img/White win.png")).getImage(), xDimension+80*4+15, yDimension+80*4+50 , 124, 34, null );
         	
         	
         }
@@ -526,7 +526,7 @@ public class ChessBoardPanel extends JPanel {
         	g.setColor(myColor);
         	g.fillRect(xDimension+80*4, yDimension+80*4, 160, 160);
         	
-        	g.drawImage(new ImageIcon(this.getClass().getResource("/img/Stalemate.png")).getImage(), xDimension+80*4, yDimension+80*5 , 114, 34, null );
+        	g.drawImage(new ImageIcon(this.getClass().getResource("/img/Stalemate.png")).getImage(), xDimension+80*4+20, yDimension+80*4+50 , 114, 34, null );
         }
         
         
