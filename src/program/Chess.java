@@ -1,6 +1,9 @@
 package program;
 
 import java.util.ArrayList;
+
+import javax.swing.JFrame;
+
 import pieces.Knight;
 import pieces.*;
 
@@ -1526,19 +1529,21 @@ public class Chess {
      * @param args
      */
     public static void main(String[] args) {
+    	JFrame frame = new JFrame("Chess");
     	
-        Board board = new Board("null null null null null null null null \r\n"
-        		+ "null null Kingwhite null null null null null \r\n"
-        		+ "null null Kingblack null null null null null \r\n"
-        		+ "null null null null null null null null \r\n"
-        		+ "null null null null null null null null \r\n"
-        		+ "null null null null null null null null \r\n"
-        		+ "null null null null null null null null \r\n"
-        		+ "null null null null null null null null \r\n");
+ChessBoardPanel test = new ChessBoardPanel();
         
-        System.out.println(canKingMove(board, 0));
+    	frame.add(test);
+    	
+    	
+        frame.setSize(850,850 ); // Set your desired size
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Close the application when the window is closed
+        frame.setLocationRelativeTo(null); // Center the window on the screen
         
-        System.out.println(board.printBoard());
+    	
+
+        frame.setVisible(true); // Make the window visible
+    	
 
     }
 }
